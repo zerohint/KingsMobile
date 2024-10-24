@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9c547c955e8224d8178458226a8106, type: 3}
+  m_Name: Karaman
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: 7
+  <Name>k__BackingField: "Karamano\u011Fullar\u0131 Beyli\u011Fi"
+  <Slogan>k__BackingField: "S\xF6z\xFCm\xFCz k\u0131l\u0131c\u0131m\u0131z kadar
+    g\xFC\xE7l\xFCd\xFCr!"
+  <Icon>k__BackingField: {fileID: 21300000, guid: 15b4bd6708f0ea44e934c22fcb8a390d,
+    type: 3}
+  <Description>k__BackingField: "Anadolu'nun g\xFCneyinde Karaman merkezli olarak
+    kurulan Karamano\u011Fullar\u0131, askeri ve k\xFClt\xFCrel anlamda \xF6nemli
+    bir beylikti. T\xFCrk\xE7eyi resmi dil olarak kullanan ilk beyliklerden biri
+    olmalar\u0131yla bilinirler."
+  <ThemeColor>k__BackingField: {r: 1, g: 0.64705884, b: 0, a: 1}

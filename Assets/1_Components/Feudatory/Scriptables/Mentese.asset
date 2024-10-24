@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9c547c955e8224d8178458226a8106, type: 3}
+  m_Name: Mentese
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: 9
+  <Name>k__BackingField: "Mente\u015Feo\u011Fullar\u0131 Beyli\u011Fi"
+  <Slogan>k__BackingField: "Her sava\u015Fta bir da\u011F gibi dururuz!"
+  <Icon>k__BackingField: {fileID: 21300000, guid: cb89575e229942f4eb9dca89de7dbbe2,
+    type: 3}
+  <Description>k__BackingField: "G\xFCneybat\u0131 Anadolu\u2019da, Mu\u011Fla ve
+    \xE7evresinde kurulan bu beylik, g\xFC\xE7l\xFC donanmalar\u0131yla Akdeniz'de
+    etkin olmu\u015F ve ticaret yollar\u0131na hakimiyet sa\u011Flam\u0131\u015Flard\u0131."
+  <ThemeColor>k__BackingField: {r: 0.27450982, g: 0.50980395, b: 0.7058824, a: 1}

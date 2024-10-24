@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9c547c955e8224d8178458226a8106, type: 3}
+  m_Name: Candar
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: 2
+  <Name>k__BackingField: "Candaro\u011Fullar\u0131 Beyli\u011Fi"
+  <Slogan>k__BackingField: "Da\u011Flar\u0131n ard\u0131nda zafer bizi bekler!"
+  <Icon>k__BackingField: {fileID: 21300000, guid: dac189ca227ccf34aba4a6425778f513,
+    type: 3}
+  <Description>k__BackingField: "Kuzeybat\u0131 Anadolu'da Kastamonu ve Sinop civar\u0131nda
+    h\xFCk\xFCm s\xFCren\r\nCandaro\u011Fullar\u0131, Karadeniz ticaret yollar\u0131na
+    h\xE2kim olmu\u015F bir beylikti. Denizcilik ve ticaret konusunda\r\nolduk\xE7a
+    geli\u015Fmi\u015Flerdi."
+  <ThemeColor>k__BackingField: {r: 1, g: 0.84313726, b: 0, a: 1}

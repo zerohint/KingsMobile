@@ -1,0 +1,5 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+Assets/Z_Imports/MedievalKingdom/**/*.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/Z_Imports/MedievalKingdom/**/*.asset filter=lfs diff=lfs merge=lfs -text
+Assets/Z_Imports/MedievalKingdom/**/*.unity filter=lfs diff=lfs merge=lfs -text
