@@ -17,7 +17,7 @@ public class ViewManager : MonoBehaviour
         {
             viewData.SetActive(false);
         }
-        ChangeView(View.Village);
+        //ChangeView(View.Village);
     }
 
 

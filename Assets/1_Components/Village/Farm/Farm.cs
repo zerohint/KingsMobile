@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Village
 {
-    public class Farm : VillageBuilding
+    public class Farm : BuildingBase
     {
         public override void OnPress()
         {

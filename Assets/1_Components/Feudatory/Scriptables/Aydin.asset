@@ -22,3 +22,16 @@ MonoBehaviour:
     bir beyliktir. Ba\u015Fkentleri Birgi olup, Akdeniz'de g\xFC\xE7l\xFC bir donanmaya
     sahiplerdi ve Ege k\u0131y\u0131lar\u0131ndaki limanlar\u0131 kontrol ediyorlard\u0131."
   <ThemeColor>k__BackingField: {r: 0.6784314, g: 0.84705883, b: 0.9019608, a: 1}
+  <Castles>k__BackingField:
+  - Coordinate:
+      x: 2.69
+      y: 0
+  - Coordinate:
+      x: 0
+      y: 0
+  - Coordinate:
+      x: 0
+      y: 0
+  - Coordinate:
+      x: 0
+      y: 0

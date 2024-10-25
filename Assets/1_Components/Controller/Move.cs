@@ -4,7 +4,7 @@ public partial class CameraController
 {
     public class Move : ControllerModule
     {
-        [SerializeField] private float moveSpeed = 10f;
+        [SerializeField] private float moveSpeed = 40f;
 
         public Move(CameraController controller) : base(controller) { }
 

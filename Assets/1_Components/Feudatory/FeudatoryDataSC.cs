@@ -1,3 +1,5 @@
+using Game.Map;
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FeudatoryData", menuName = "Game/FeudatoryData")]
@@ -9,5 +11,12 @@ public class FeudatoryDataSC : ScriptableObject
     [field:SerializeField] public Sprite Icon { get; private set; }
     [field:SerializeField, TextArea] public string Description { get; private set; }
     [field:SerializeField] public Color ThemeColor { get; private set; }
+    [field:SerializeField] public Castle[] Castles { get; private set; } = new Castle[4];
+
+    [Serializable]
+    public struct Castle
+    {
+        public Coordinate Coordinate;
+    }
 
 }
