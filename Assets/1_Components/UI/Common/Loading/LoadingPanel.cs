@@ -1,7 +1,7 @@
 using UnityEngine;
 
-// TODO: monosingleton
-public class LoadingPanel : MonoBehaviour
+
+public class LoadingPanel : MonoSingletonSerializable
 {
     [SerializeField] private GameObject loadingPanel;
 

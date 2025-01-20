@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// TODO: full change
+/// </summary>
 [CreateAssetMenu(fileName = "LoginManager", menuName = "Game/Managers/Login Manager")]
 public class LoginManager : SingletonSC<LoginManager>
 {

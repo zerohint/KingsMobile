@@ -8,6 +8,8 @@ namespace Game.Map
     {
         public void OnPress()
         {
+            // bilgi paneli, loading
+            // zgame.data.get<castle>((data) => { bilgipaneli.setview(castledata) });
             Debug.Log("Castle Pressed");
         }
     }

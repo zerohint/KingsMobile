@@ -1,5 +1,5 @@
 using Map;
-using Redellion; 
+using ZeroGame; 
 using System.Linq;
 using UnityEngine;
 
@@ -36,6 +36,7 @@ namespace Game.Map
         /// </summary>
         private void DrawEntities()
         {
+            // pooling etc.
             feudatories ??= SCDB.GetAll<FeudatoryDataSC>().ToArray();
 
             foreach (var feudatory in feudatories)

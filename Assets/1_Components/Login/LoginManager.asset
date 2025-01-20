@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ce9efcd19e1e048af1e27147b749e0, type: 3}
   m_Name: LoginManager
   m_EditorClassIdentifier: 
-  loginPanel: {fileID: 7065563742393487943, guid: 72239e890f886a746a51194e0ea13361,
-    type: 3}
+  loginPanel: {fileID: 0}

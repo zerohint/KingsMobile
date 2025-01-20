@@ -139,6 +139,16 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.zerogame": {
+      "version": "https://github.com/zerohint/ZeroGame.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.inputsystem": ">=1.7.0",
+        "com.unity.textmeshpro": ">=3.0.0"
+      },
+      "hash": "25efdcd53f00f785f487b8a209ee0b3276e1ab08"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

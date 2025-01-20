@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
@@ -15,13 +13,13 @@ public sealed class ScenesManager : SingletonSC<ScenesManager>
     /// <param name="scene"></param>
     public async void LoadScene(Scene scene)
     {
-        LoadingPanel.SetLoading(true);
+        //LoadingPanel.SetLoading(true);
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync((int)scene);
         while (!asyncLoad.isDone)
             await Task.Yield();
         
-        LoadingPanel.SetLoading(false);
+        //LoadingPanel.SetLoading(false);
     }
 
     public enum Scene

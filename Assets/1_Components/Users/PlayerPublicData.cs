@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Multiplayer data that is shared between all players
+/// Need better structure for multiplayer data
 /// </summary>
 public class PlayerPublicData
 {
