@@ -6,57 +6,60 @@ namespace Game.Map
     [System.Serializable]
     public struct Coordinate
     {
-        public float x;
-        public float y;
+        private float _x;
+        private float _y;
+
+        public float x
+        {
+            get => _x;
+            set => _x = Mathf.Clamp(value, -1f, 1f);
+        }
+
+        public float y
+        {
+            get => _y;
+            set => _y = Mathf.Clamp(value, -1f, 1f);
+        }
 
         public Coordinate(float x, float y)
         {
-            this.x = x;
-            this.y = y;
+            _x = Mathf.Clamp(x, -1f, 1f);
+            _y = Mathf.Clamp(y, -1f, 1f);
         }
 
-        
-
-
-        public static Coordinate zero = new (0, 0);
+        public static Coordinate zero = new(0, 0);
 
         public static Coordinate Lerp(Coordinate a, Coordinate b, float t)
         {
             t = Mathf.Clamp01(t);
             return LerpUnclamped(a, b, t);
         }
+
         public static Coordinate LerpUnclamped(Coordinate a, Coordinate b, float t)
         {
-            return new Coordinate(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
+            return new Coordinate(
+                a.x + (b.x - a.x) * t,
+                a.y + (b.y - a.y) * t
+            );
         }
-
 
         public override string ToString() => $"({x}, {y})";
 
-        public override int GetHashCode()
-        {
-            return x.GetHashCode() ^ (y.GetHashCode() << 2);
-        }
+        public override int GetHashCode() => x.GetHashCode() ^ (y.GetHashCode() << 2);
 
         public override bool Equals(object other)
         {
-            if (!(other is Coordinate))
-            {
-                return false;
-            }
-
-            return Equals((Coordinate)other);
+            return other is Coordinate otherCoordinate && Equals(otherCoordinate);
         }
+
         public bool Equals(Coordinate other)
         {
             return x == other.x && y == other.y;
         }
 
+        public static Coordinate operator +(Coordinate a, Coordinate b) => new(a.x + b.x, a.y + b.y);
 
-
-        public static Coordinate operator +(Coordinate a, Coordinate b) => new (a.x + b.x, a.y + b.y);
-
-        public static Coordinate operator -(Coordinate a, Coordinate b) => new (a.x - b.x, a.y - b.y);
+        public static Coordinate operator -(Coordinate a, Coordinate b) => new(a.x - b.x, a.y - b.y);
 
         public static bool operator ==(Coordinate lhs, Coordinate rhs)
         {
@@ -80,5 +83,4 @@ namespace Game.Map
             return new Vector2(v.x, v.y);
         }
     }
-
 }

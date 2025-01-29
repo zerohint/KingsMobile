@@ -1,17 +1,14 @@
-using UnityEngine;
-
 namespace Game.Village
 {
-    public class Farm : BuildingBase
+    public class Arena : BuildingBase
     {
         public override void OnPress()
         {
             ShowPanel();
-            Debug.Log("farm press");
         }
         public override System.Type GetPanelType()
         {
-            return typeof(FarmPanel);
+            return typeof(ArenaPanel);
         }
     }
 }

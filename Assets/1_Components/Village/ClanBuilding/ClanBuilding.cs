@@ -4,7 +4,12 @@ namespace Game.Village
     {
         public override void OnPress()
         {
-            throw new System.NotImplementedException();
+            ShowPanel();
         }
+        public override System.Type GetPanelType()
+        {
+            return typeof(ClanBuildingPanel);
+        }
+
     }
 }

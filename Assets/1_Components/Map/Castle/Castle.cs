@@ -4,13 +4,50 @@ using UnityEngine;
 
 namespace Game.Map
 {
-    public class Castle : MonoBehaviour, IPressObject
+    public class Castle : MapObjectBase
     {
-        public void OnPress()
+        private CastleData castleData;
+
+        private void Awake()
         {
-            // bilgi paneli, loading
-            // zgame.data.get<castle>((data) => { bilgipaneli.setview(castledata) });
-            Debug.Log("Castle Pressed");
+            castleData = FakeDatabase.GetRandomCastleData();
         }
+
+        public override void OnPress()
+        {
+            ShowCastleInfoPanel(castleData);
+            ShowPanel();
+        }
+
+        private void ShowCastleInfoPanel(CastleData data)
+        {
+            Debug.Log($"Castle Name: {data.castleName}");
+            Debug.Log($"Castle Owner: {data.castleOwner}");
+            Debug.Log($"Castle Level: {data.castleLevel}");
+            Debug.Log($"Resources Available: {data.resourcesAvailable}");
+        }
+        public override PanelData GetPanelData()
+        {
+            return new PanelData
+            {
+                name = castleData.castleName,
+                owner = castleData.castleOwner,
+                level = castleData.castleLevel
+            };
+        }
+
+        public CastleData GetCastleData()
+        {
+            return castleData;
+        }
+    }
+
+    [System.Serializable]
+    public class CastleData
+    {
+        public string castleName;
+        public string castleOwner;
+        public int castleLevel;
+        public int resourcesAvailable;
     }
 }
