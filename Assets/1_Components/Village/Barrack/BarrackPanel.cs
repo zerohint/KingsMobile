@@ -10,49 +10,38 @@ namespace Game.Village
     {
         [SerializeField] private TMP_Text buildingNameText;
         [SerializeField] private GameObject soldierEntryPrefab;
+        [SerializeField] private GameObject RightPanelObject;
         [SerializeField] private Transform soldierListContainer;
-        [SerializeField] private Button closeButton;
 
+        
         private Barrack currentBarrack;
         private List<GameObject> spawnedSoldierEntries = new List<GameObject>();
 
-        private void Start()
-        {
-            closeButton.onClick.AddListener(() => SetActive(false));
-        }
-
+        
         public override void UpdatePanel(BuildingBase building)
         {
             currentBarrack = building as Barrack;
             if (currentBarrack == null) return;
 
-            buildingNameText.text = currentBarrack.name;
-            RefreshSoldierList();
-        }
-
-        private void RefreshSoldierList()
-        {
-            // Önce eski askerleri temizle
-            foreach (var entry in spawnedSoldierEntries)
-            {
-                Destroy(entry);
-            }
-            spawnedSoldierEntries.Clear();
-
-            // Yeni askerleri oluþtur
-            foreach (var soldier in currentBarrack.AvailableSoldiers)
-            {
-                GameObject entry = Instantiate(soldierEntryPrefab, soldierListContainer);
-                SoldierEntryUI entryUI = entry.GetComponent<SoldierEntryUI>();
-                entryUI.Setup(soldier, OnRecruitSoldier);
-                spawnedSoldierEntries.Add(entry);
-            }
+            buildingNameText.text = "Kýþla";
         }
 
         private void OnRecruitSoldier(SoldierType soldier)
         {
             soldier.Count += 1;
-            RefreshSoldierList();
+        }
+        public void UpgradeBuilding()
+        {
+            PopupManager.Instance.ShowPopup(
+                "Bu binayý yükseltmek istediðine emin misin?",
+                () => {
+                    Debug.Log("Bina upgrade edildi!");
+                    // Upgrade iþlemini burada yap
+                },
+                () => {
+                    Debug.Log("Upgrade iptal edildi.");
+                }
+            );
         }
     }
 }
