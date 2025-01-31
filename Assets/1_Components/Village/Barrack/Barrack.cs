@@ -18,6 +18,15 @@ namespace Game.Village
             };
         }
 
+        private void LoadData()
+        {
+            int soldierCount = GameManager.Instance.unitCounts.ContainsKey("soldier")
+                ? GameManager.Instance.unitCounts["soldier"]
+                : 0;
+
+            Debug.Log("Barracks has " + soldierCount + " soldiers.");
+        }
+
         public override void OnPress()
         {
             ShowPanel();
