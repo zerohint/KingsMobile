@@ -10542,6 +10542,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1523710138}
+  - component: {fileID: 1523710139}
   m_Layer: 0
   m_Name: Village
   m_TagString: Untagged
@@ -10566,6 +10567,19 @@ Transform:
   - {fileID: 1551270290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1523710139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523710137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f009284b61d4341868fad4bdd8f73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildings: []
 --- !u!1 &1551270289
 GameObject:
   m_ObjectHideFlags: 0
@@ -26059,7 +26073,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5776346.5, y: 4183198.5}
+  m_AnchoredPosition: {x: -5799931, y: 4203253.5}
   m_SizeDelta: {x: 0, y: 1050.1514}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2619862701007762572

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,26 +6,36 @@ namespace Game.Village
 {
     public class Barrack : BuildingBase
     {
-        public List<SoldierType> AvailableSoldiers { get; private set; }
+        public List<SoldierInfo> AvailableSoldiers { get; private set; }
 
         private void Start()
         {
             // Üretilebilecek asker türleri (isteðe baðlý olarak bu liste geniþletilebilir)
-            AvailableSoldiers = new List<SoldierType>
+            AvailableSoldiers = new List<SoldierInfo>
             {
-                new SoldierType("Süvari", 35),
-                new SoldierType("Atsýz", 35),
-                new SoldierType("Piyade", 35)
+                new SoldierInfo(SoldierType.Suvari, 35),
+                new SoldierInfo(SoldierType.Yaya, 35)
             };
         }
 
-        private void LoadData()
+        public override string GetData()
         {
-            int soldierCount = GameManager.Instance.unitCounts.ContainsKey("soldier")
-                ? GameManager.Instance.unitCounts["soldier"]
-                : 0;
+            return JsonUtility.ToJson(new Data()
+            {
+                AvailableSoldiers = AvailableSoldiers
+            });
+        }
 
-            Debug.Log("Barracks has " + soldierCount + " soldiers.");
+        public override void SetData(string dataString)
+        {
+            Data data = JsonUtility.FromJson<Data>(dataString);
+            AvailableSoldiers = data.AvailableSoldiers;
+        }
+
+        [Serializable]
+        private struct Data
+        {
+            public List<SoldierInfo> AvailableSoldiers;
         }
 
         public override void OnPress()
@@ -32,21 +43,28 @@ namespace Game.Village
             ShowPanel();
         }
 
-        public override System.Type GetPanelType()
+        public override Type GetPanelType()
         {
             return typeof(BarrackPanel);
         }
+
+        [Serializable]
+        public class SoldierInfo
+        {
+            public SoldierType Type;
+            public int Count;
+
+            public SoldierInfo(SoldierType type, int count)
+            {
+                Type = type;
+                Count = count;
+            }
+        }
     }
 
-    public class SoldierType
+    public enum SoldierType
     {
-        public string Name;
-        public int Count;
-
-        public SoldierType(string name, int count)
-        {
-            Name = name;
-            Count = count;
-        }
+        Suvari,
+        Yaya
     }
 }

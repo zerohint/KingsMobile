@@ -1,14 +1,27 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Village
 {
     public class ClanBuilding : BuildingBase
     {
-        public bool IsInClan { get; private set; }
-        public string ClanName { get; private set; }
-        public List<ClanData> AvailableClans { get; private set; } = new List<ClanData>();
+        public Clan ClanData { get; private set; }
+
+        private void Start()
+        {
+            // Varsayýlan deðerler (isteðe baðlý olarak deðiþtirilebilir)
+            ClanData = new Clan(1, 10);
+        }
+
+        public override string GetData()
+        {
+            return JsonUtility.ToJson(ClanData);
+        }
+
+        public override void SetData(string dataString)
+        {
+            ClanData = JsonUtility.FromJson<Clan>(dataString);
+        }
 
         public override void OnPress()
         {
@@ -19,22 +32,18 @@ namespace Game.Village
         {
             return typeof(ClanBuildingPanel);
         }
+    }
 
-        public void JoinClan(ClanData clan)
-        {
-            IsInClan = true;
-            ClanName = clan.Name;
-        }
+    [Serializable]
+    public class Clan
+    {
+        public int ClanLevel;
+        public int PlayerLimit;
 
-        public void LeaveClan()
+        public Clan(int clanLevel, int playerLimit)
         {
-            IsInClan = false;
-            ClanName = "";
-        }
-
-        public void SetAvailableClans(List<ClanData> clans)
-        {
-            AvailableClans = clans;
+            ClanLevel = clanLevel;
+            PlayerLimit = playerLimit;
         }
     }
 }

@@ -6,6 +6,8 @@ namespace Game.Village
     {
         public abstract void OnPress();
         public abstract System.Type GetPanelType();
+        public abstract string GetData();
+        public abstract void SetData(string data);
 
         protected void ShowPanel()
         {

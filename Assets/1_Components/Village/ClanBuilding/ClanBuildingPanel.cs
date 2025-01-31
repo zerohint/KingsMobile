@@ -17,18 +17,11 @@ namespace Game.Village
             if (clanBuilding == null) return;
 
             buildingNameText.text = "Teþkilat";  // Sabit isim, istersen deðiþtirilebilir.
-            clanStatusText.text = clanBuilding.IsInClan ? $"Bulunduðun Teþkilat: {clanBuilding.ClanName}" : "Henüz bir teþkilatta deðilsin";
 
             // Önce eski giriþleri temizle
             foreach (Transform child in clanListContainer.transform)
             {
                 Destroy(child.gameObject);
-            }
-
-            // Mevcut teþkilatlarý listele
-            foreach (var clan in clanBuilding.AvailableClans)
-            {
-                GameObject entry = Instantiate(clanEntryPrefab, clanListContainer.transform);
             }
         }
     }

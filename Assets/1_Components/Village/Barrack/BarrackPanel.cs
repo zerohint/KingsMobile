@@ -26,10 +26,6 @@ namespace Game.Village
             buildingNameText.text = "Kýþla";
         }
 
-        private void OnRecruitSoldier(SoldierType soldier)
-        {
-            soldier.Count += 1;
-        }
         public void UpgradeBuilding()
         {
             PopupManager.Instance.ShowPopup(

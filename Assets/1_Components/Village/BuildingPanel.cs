@@ -63,7 +63,7 @@ namespace Game.Village
                .SetEase(Ease.InOutQuad);
 
             // Ok butonu döndürme
-            arrowButton.DORotate(new Vector3(0, 0, isOpen ? 180 : 0), rotateDuration, RotateMode.FastBeyond360)
+            arrowButton.DORotate(new Vector3(0, 0, isOpen ? 180 : 0), 0, RotateMode.FastBeyond360)
                        .SetEase(Ease.InOutQuad);
         }
 
