@@ -3,6 +3,8 @@ using Firebase;
 using Firebase.Firestore;
 using Firebase.Extensions;
 using System;
+using System.Threading.Tasks;
+using Google.MiniJSON;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -18,15 +20,16 @@ public class FirebaseManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            InitializeFirebase();
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
+        InitializeFirebase();
         //LoadArmiesFromFirestore();
     }
 
@@ -75,7 +78,7 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-    public void SaveGameData(string jsonData, Action onComplete = null)
+    public void SavePlayerData(PlayerData playerData, Action onComplete = null)
     {
         if (firestore == null)
         {
@@ -83,10 +86,10 @@ public class FirebaseManager : MonoBehaviour
             return;
         }
 
-        // JSON verisini Firestore için Dictionary olarak parse et
-        var data = new { json = jsonData };
+        // TODO: kalkacak
+        var data = new { json = JsonUtility.ToJson(playerData, true) };
 
-        firestore.Collection("GameData").Document("SaveData").SetAsync(data)
+        firestore.Collection(FKeys.GAME_DATA).Document(FKeys.SAVE_DATA).SetAsync(data)
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted)
@@ -101,7 +104,11 @@ public class FirebaseManager : MonoBehaviour
             });
     }
 
-    public void LoadGameData(Action<string> onDataLoaded)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="onDataLoaded"></param>
+    public void LoadPlayerData(Action<PlayerData> onDataLoaded)
     {
         if (firestore == null)
         {
@@ -109,28 +116,44 @@ public class FirebaseManager : MonoBehaviour
             return;
         }
 
-        firestore.Collection("GameData").Document("SaveData").GetSnapshotAsync()
+        firestore.Collection(FKeys.GAME_DATA).Document(FKeys.SAVE_DATA).GetSnapshotAsync()
             .ContinueWithOnMainThread(task =>
             {
+                PlayerData ret = new();
                 if (task.IsCompleted)
                 {
                     DocumentSnapshot snapshot = task.Result;
                     if (snapshot.Exists)
                     {
-                        string jsonData = snapshot.GetValue<string>("json");
-                        Debug.Log("Firestore'dan veriler çekildi: " + jsonData);
-                        onDataLoaded?.Invoke(jsonData);
+                        string jsonData = snapshot.GetValue<string>(FKeys.JSON);
+                        if (!string.IsNullOrEmpty(jsonData)) JsonUtility.FromJsonOverwrite(jsonData, ret);
                     }
                     else
                     {
-                        Debug.LogWarning("Firestore'da kayıtlı veri bulunamadı.");
-                        onDataLoaded?.Invoke(null);
+                        Debug.LogWarning("No data on db, new data created.");
                     }
+                    onDataLoaded?.Invoke(ret);
                 }
                 else
                 {
-                    Debug.LogError("Veri çekme hatası: " + task.Exception);
+                    AlertPanel.Alert("Task error: " + task.Exception);
                 }
             });
     }
+
+   
+
+    public static class FKeys
+    {
+        // Tables
+        public const string GAME_DATA = "GameData";
+
+        // Documents
+        public const string SAVE_DATA = "SaveData";
+
+        // Keys
+        public const string JSON = "json";
+    }
 }
+
+

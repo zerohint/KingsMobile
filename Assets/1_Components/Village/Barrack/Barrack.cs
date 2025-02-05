@@ -6,7 +6,10 @@ namespace Game.Village
 {
     public class Barrack : BuildingBase
     {
+        
         public List<SoldierInfo> AvailableSoldiers { get; private set; }
+
+        public override BuildingType BuildingType => BuildingType.Barrack;
 
         private void Start()
         {
@@ -43,10 +46,7 @@ namespace Game.Village
             ShowPanel();
         }
 
-        public override Type GetPanelType()
-        {
-            return typeof(BarrackPanel);
-        }
+        
 
         [Serializable]
         public class SoldierInfo

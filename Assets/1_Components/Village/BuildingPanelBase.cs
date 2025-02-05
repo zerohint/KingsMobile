@@ -4,7 +4,7 @@ namespace Game.Village
 {
     public abstract class BuildingPanelBase : MonoBehaviour
     {
-        public abstract void UpdatePanel(BuildingBase building);
+        public BuildingType BuildingType { get; }
         public virtual void SetActive(bool active)
         {
             gameObject.SetActive(active);

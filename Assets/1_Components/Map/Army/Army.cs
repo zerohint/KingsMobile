@@ -56,6 +56,7 @@ namespace Map
             return armyData;
         }
 
+        // TODO: divide
         public void InitializeFromFirestore(ArmyFirestoreData data, Transform[] waypointArray, DocumentReference docRef)
         {
             armyData = new ArmyData

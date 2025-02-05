@@ -3,11 +3,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public PlayerData playerData = new();
 
-    public string playerName;
-    public int playerLevel;
-    public int gold;
-    public int food;
 
     private void Awake()
     {
@@ -15,15 +12,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            // FirebaseManager hazýr olduðunda veriyi yükle
-            if (FirebaseManager.Instance != null)
-            {
-                FirebaseManager.Instance.OnFirebaseInitialized += OnFirebaseReady;
-            }
-            else
-            {
-                Debug.LogError("FirebaseManager sahnede yok!");
-            }
         }
         else
         {
@@ -31,37 +19,58 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnFirebaseReady()
+    private void Start()
     {
-        FirebaseManager.Instance.LoadGameData(OnGameDataLoaded);
-    }
-
-    private void OnGameDataLoaded(string json)
-    {
-        if (!string.IsNullOrEmpty(json))
+        if (FirebaseManager.Instance != null)
         {
-            JsonUtility.FromJsonOverwrite(json, this);
-            Debug.Log("Oyun verileri yüklendi.");
+            FirebaseManager.Instance.OnFirebaseInitialized += OnFirebaseReady;
         }
         else
         {
-            Debug.Log("Firestore'da kayýtlý oyun verisi bulunamadý. Varsayýlan deðerler kullanýlacak.");
-            InitializeDefaultValues();
+            Debug.LogError("FirebaseManager sahnede yok!");
         }
     }
 
-    private void InitializeDefaultValues()
+
+    private void OnFirebaseReady()
     {
-        playerName = "Player1";
-        playerLevel = 1;
-        gold = 1000;
-        food = 500;
-        SaveGame();
+        FirebaseManager.Instance.LoadPlayerData((data) =>
+        {
+            playerData = data;
+        });
     }
+
+    
 
     public void SaveGame()
     {
-        string json = JsonUtility.ToJson(this, true);
-        FirebaseManager.Instance.SaveGameData(json);
+        FirebaseManager.Instance.SavePlayerData(playerData);
+    }
+}
+
+
+public class PlayerData
+{
+    public string playerName;
+    public int playerLevel = 0;
+    public int gold = 0;
+    public int food = 0;
+
+    public PlayerData()
+    {
+        Random();
+    }
+
+    public PlayerData(string playerName)
+    {
+        this.playerName = playerName;
+    }
+
+    public void Random()
+    {
+        playerName = "Player#" + 123/*UnityEngine.Random.Range(111, 999)*/;
+        playerLevel = 1;
+        gold = 1000;
+        food = 500;
     }
 }

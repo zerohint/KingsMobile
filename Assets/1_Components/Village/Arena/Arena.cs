@@ -10,10 +10,7 @@ namespace Game.Village
         {
             ShowPanel();
         }
-        public override System.Type GetPanelType()
-        {
-            return typeof(ArenaPanel);
-        }
+        public override System.Type GetPanelType => typeof(ArenaPanel);
 
         public override string GetData()
         {

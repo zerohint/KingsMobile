@@ -9,10 +9,7 @@ namespace Game.Village
         {
             ShowPanel();
         }
-        public override System.Type GetPanelType()
-        {
-            return typeof(MarketPanel);
-        }
+        public override System.Type GetPanelType => typeof(MarketPanel);
         public override string GetData()
         {
             return JsonUtility.ToJson(new Data()

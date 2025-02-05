@@ -10,10 +10,8 @@ namespace Game.Village
             ShowPanel();
             Debug.Log("farm press");
         }
-        public override System.Type GetPanelType()
-        {
-            return typeof(FarmPanel);
-        }
+        public override System.Type GetPanelType => typeof(FarmPanel);
+
         public override string GetData()
         {
             return JsonUtility.ToJson(new Data()

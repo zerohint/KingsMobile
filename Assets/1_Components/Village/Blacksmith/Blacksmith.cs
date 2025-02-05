@@ -5,14 +5,14 @@ namespace Game.Village
 {
     public class Blacksmith : BuildingBase
     {
+        public override System.Type GetPanelType => typeof(BlacksmithPanel);
+
+
         public override void OnPress()
         {
             ShowPanel();
         }
-        public override System.Type GetPanelType()
-        {
-            return typeof(BlacksmithPanel);
-        }
+
         public override string GetData()
         {
             return JsonUtility.ToJson(new Data()

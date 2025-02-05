@@ -17,12 +17,13 @@ namespace Game.Village
         private Barrack currentBarrack;
         private List<GameObject> spawnedSoldierEntries = new List<GameObject>();
 
-        
-        public override void UpdatePanel(BuildingBase building)
+        private void OnEnable()
         {
-            currentBarrack = building as Barrack;
-            if (currentBarrack == null) return;
+            UpdateView();
+        }
 
+        public void UpdateView()
+        {
             buildingNameText.text = "Kýþla";
         }
 

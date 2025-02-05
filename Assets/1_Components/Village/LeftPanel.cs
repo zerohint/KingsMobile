@@ -2,10 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System.Collections.Generic;
+using System;
+
+
 namespace Game.Village
 {
-    public class BuildingPanel : MonoBehaviour
+    public class LeftPanel : MonoBehaviour
     {
+        public static LeftPanel Instance; // todo yap
+
+        [SerializeField] private Transform panelContainer;
+
         [SerializeField] private RectTransform tab;
         public Vector2 openPosition;
         public Vector2 closedPosition;
@@ -22,6 +30,27 @@ namespace Game.Village
         public float rotateDuration = 0.3f;
 
         private bool isOpen = false;
+
+        [SerializeField] private BuildingPanelBase[] panelPrefabs;
+        private List<BuildingPanelBase> panelsInstantiated = new();
+        private BuildingPanelBase currentPanel = null;
+
+        public void OpenPanel(BuildingType btype)
+        {
+            var instantiatedPanel = panelsInstantiated.Find(panel => panel.BuildingType == btype);
+            if(instantiatedPanel == null)
+            {
+                var prefab = Array.Find(panelPrefabs, panel => panel.BuildingType == btype);
+                instantiatedPanel = Instantiate(prefab, panelContainer);
+            }
+
+            if(currentPanel != null)
+                currentPanel.SetActive(false);
+            instantiatedPanel.SetActive(true);
+            currentPanel = instantiatedPanel;
+        }
+
+
 
 
         private BuildingBase currentBuilding;

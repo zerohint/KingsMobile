@@ -7,6 +7,7 @@ public class Village : MonoBehaviour
 {
     [SerializeField] private BuildingBase[] buildings;
 
+
     public string GetData()
     {
         List<string> datas = new List<string>();

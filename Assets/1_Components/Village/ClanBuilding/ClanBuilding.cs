@@ -28,10 +28,7 @@ namespace Game.Village
             ShowPanel();
         }
 
-        public override Type GetPanelType()
-        {
-            return typeof(ClanBuildingPanel);
-        }
+        public override Type GetPanelType => typeof(ClanBuildingPanel);
     }
 
     [Serializable]

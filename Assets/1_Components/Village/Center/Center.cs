@@ -9,10 +9,8 @@ namespace Game.Village
         {
             ShowPanel();
         }
-        public override System.Type GetPanelType()
-        {
-            return typeof(CenterPanel);
-        }
+        public override System.Type GetPanelType => typeof(CenterPanel);
+
         public override string GetData()
         {
             return JsonUtility.ToJson(new Data()
