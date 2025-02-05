@@ -5,8 +5,7 @@ namespace Game.Village
 {
     public class Blacksmith : BuildingBase
     {
-        public override System.Type GetPanelType => typeof(BlacksmithPanel);
-
+        public override BuildingType BuildingType => BuildingType.Blacksmith;
 
         public override void OnPress()
         {

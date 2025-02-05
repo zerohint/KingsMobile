@@ -6,12 +6,14 @@ namespace Game.Village
     public class CouncilPanel : BuildingPanelBase
     {
         [SerializeField] private TextMeshProUGUI buildingNameText;
-        public override void UpdatePanel(BuildingBase building)
+        private void OnEnable()
         {
-            var council = building as Council;
-            if (council != null) return;
+            UpdateView();
+        }
 
-            buildingNameText.text = "Divan";
+        public void UpdateView()
+        {
+            buildingNameText.text = "Council";
         }
     }
 }

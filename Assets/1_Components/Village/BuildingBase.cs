@@ -18,12 +18,15 @@ namespace Game.Village
 
     public enum BuildingType
     {
+        Arena,
         Barrack,
-        House,
+        Blacksmith,
+        Center,
+        ClanBuilding,
+        Council,
+        Farm,
         Market,
-        Mine,
-        Sawmill,
-        StoneMine,
-        WoodCutter
+        Stable,
+
     }
 }

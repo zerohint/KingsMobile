@@ -5,6 +5,7 @@ namespace Game.Village
 {
     public class ClanBuilding : BuildingBase
     {
+        public override BuildingType BuildingType => BuildingType.Center;
         public Clan ClanData { get; private set; }
 
         private void Start()
@@ -27,8 +28,6 @@ namespace Game.Village
         {
             ShowPanel();
         }
-
-        public override Type GetPanelType => typeof(ClanBuildingPanel);
     }
 
     [Serializable]

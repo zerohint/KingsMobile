@@ -6,10 +6,9 @@ namespace Game.Village
 {
     public class Barrack : BuildingBase
     {
-        
-        public List<SoldierInfo> AvailableSoldiers { get; private set; }
-
         public override BuildingType BuildingType => BuildingType.Barrack;
+
+        public List<SoldierInfo> AvailableSoldiers { get; private set; }
 
         private void Start()
         {

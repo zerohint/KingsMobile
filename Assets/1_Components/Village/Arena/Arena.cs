@@ -6,11 +6,11 @@ namespace Game.Village
 {
     public class Arena : BuildingBase
     {
+        public override BuildingType BuildingType => BuildingType.Arena;
         public override void OnPress()
         {
             ShowPanel();
         }
-        public override System.Type GetPanelType => typeof(ArenaPanel);
 
         public override string GetData()
         {

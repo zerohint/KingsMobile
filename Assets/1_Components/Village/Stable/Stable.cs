@@ -5,11 +5,12 @@ namespace Game.Village
 {
     public class Stable : BuildingBase
     {
+        public override BuildingType BuildingType => BuildingType.Stable;
         public override void OnPress()
         {
             ShowPanel();
         }
-        public override System.Type GetPanelType => typeof(StablePanel);
+        
         public override string GetData()
         {
             return JsonUtility.ToJson(new Data()

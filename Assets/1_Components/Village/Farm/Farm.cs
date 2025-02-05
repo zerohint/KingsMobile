@@ -5,12 +5,12 @@ namespace Game.Village
 {
     public class Farm : BuildingBase
     {
+        public override BuildingType BuildingType => BuildingType.Farm;
         public override void OnPress()
         {
             ShowPanel();
             Debug.Log("farm press");
         }
-        public override System.Type GetPanelType => typeof(FarmPanel);
 
         public override string GetData()
         {

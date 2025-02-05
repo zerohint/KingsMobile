@@ -5,11 +5,11 @@ namespace Game.Village
 {
     public class Council : BuildingBase
     {
+        public override BuildingType BuildingType => BuildingType.Council;
         public override void OnPress()
         {
             ShowPanel();
         }
-        public override System.Type GetPanelType => typeof(CouncilPanel);
         public override string GetData()
         {
             return JsonUtility.ToJson(new Data()

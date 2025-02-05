@@ -11,18 +11,14 @@ namespace Game.Village
         [SerializeField] private GameObject clanListContainer;
         [SerializeField] private GameObject clanEntryPrefab;
 
-        public override void UpdatePanel(BuildingBase building)
+        private void OnEnable()
         {
-            ClanBuilding clanBuilding = building as ClanBuilding;
-            if (clanBuilding == null) return;
+            UpdateView();
+        }
 
-            buildingNameText.text = "Teþkilat";  // Sabit isim, istersen deðiþtirilebilir.
-
-            // Önce eski giriþleri temizle
-            foreach (Transform child in clanListContainer.transform)
-            {
-                Destroy(child.gameObject);
-            }
+        public void UpdateView()
+        {
+            buildingNameText.text = "Clan";
         }
     }
 }

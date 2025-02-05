@@ -5,11 +5,11 @@ namespace Game.Village
 {
     public class Center : BuildingBase
     {
+        public override BuildingType BuildingType => BuildingType.Center;
         public override void OnPress()
         {
             ShowPanel();
         }
-        public override System.Type GetPanelType => typeof(CenterPanel);
 
         public override string GetData()
         {
