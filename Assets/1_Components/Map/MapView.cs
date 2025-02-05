@@ -1,7 +1,10 @@
 using Map;
-using ZeroGame; 
-using System.Linq;
+using Firebase.Firestore;
+using Firebase.Extensions;
+using System.Collections.Generic;
 using UnityEngine;
+using ZeroGame;
+using System.Linq;
 
 namespace Game.Map
 {
@@ -11,13 +14,22 @@ namespace Game.Map
         [SerializeField] private Army armyPrefab;
         [Space]
         [SerializeField] private Transform entitiesParent;
-
-
+        // 19 tane waypoint referansý, Inspector üzerinden atanacak
+        [SerializeField] private Transform[] waypointTransforms;
+        
         private FeudatoryDataSC[] feudatories;
+        
+        public FirebaseFirestore firestore;
 
         private void Start()
         {
+            firestore = FirebaseFirestore.DefaultInstance;
             DrawEntities();
+            
+        }
+        private void OnEnable()
+        {
+            LoadArmiesFromFirestore();
         }
 
         public Vector3 CoordinateToV3(Coordinate coordinate)
@@ -32,7 +44,7 @@ namespace Game.Map
         }
 
         /// <summary>
-        /// Instantiate entities on the map
+        /// Castle’leri instantiate eder.
         /// </summary>
         private void DrawEntities()
         {
@@ -41,7 +53,7 @@ namespace Game.Map
 
             foreach (var feudatory in feudatories)
             {
-                for(int i = 0; i< feudatory.Castles.Length; i++)
+                for (int i = 0; i < feudatory.Castles.Length; i++)
                 {
                     var castle = feudatory.Castles[i];
                     var castleGO = Instantiate(castlePrefab, CoordinateToV3(castle.Coordinate), Quaternion.identity);
@@ -52,16 +64,46 @@ namespace Game.Map
             }
         }
 
+        /// <summary>
+        /// Firestore’daki "Armies" koleksiyonunu okuyup, her bir Army dokümaný için prefab instantiate eder.
+        /// </summary>
+        private async void LoadArmiesFromFirestore()
+        {
+            try
+            {
+                QuerySnapshot snapshot = await firestore.Collection("Armies").GetSnapshotAsync();
+                Debug.Log("Firestore sorgusu tamamlandý. Doküman sayýsý: " + snapshot.Count);
+
+                foreach (DocumentSnapshot doc in snapshot.Documents)
+                {
+                    // Dokümandan ArmyFirestoreData modeline parse et
+                    ArmyFirestoreData data = doc.ConvertTo<ArmyFirestoreData>();
+                    Debug.Log("Ýþlenen doküman ID: " + doc.Id);
+
+                    // Army prefab’ýný instantiate et
+                    Army armyInstance = Instantiate(armyPrefab, entitiesParent);
+                    // Firestore doküman referansýný gönderiyoruz
+                    armyInstance.InitializeFromFirestore(data, waypointTransforms, doc.Reference);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError("Armies koleksiyonu okunamadý: " + ex);
+            }
+        }
+
+
 
         public FeudatoryDataSC datatowrite;
         public Transform[] trans;
-        [ContextMenu("Write")]  
+        [ContextMenu("Write")]
         public void Write()
         {
-            for(int i = 0; i<4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 datatowrite.Castles[i].Coordinate = V3ToCoordinate(trans[i].position);
             }
         }
     }
 }
+

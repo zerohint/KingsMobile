@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1022989656990",
+    "firebase_url": "https://kingsmobile-test-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "kingsmobile-test",
+    "storage_bucket": "kingsmobile-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022989656990:android:bf52bafcb6a747b626ec8f",
+        "android_client_info": {
+          "package_name": "com.Redellion.KingsMobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnTt9kkzg2jqjzg9WbN_GKInJixi-f_6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
