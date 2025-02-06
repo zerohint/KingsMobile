@@ -15,6 +15,10 @@ namespace Game.Village
         {
             UpdateView();
         }
+        private void Awake()
+        {
+            Initialize(BuildingType.ClanBuilding);
+        }
 
         public void UpdateView()
         {

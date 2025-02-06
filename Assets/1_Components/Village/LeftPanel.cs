@@ -35,6 +35,19 @@ namespace Game.Village
         private List<BuildingPanelBase> panelsInstantiated = new();
         private BuildingPanelBase currentPanel = null;
 
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
         public void OpenPanel(BuildingType btype)
         {
             var instantiatedPanel = panelsInstantiated.Find(panel => panel.BuildingType == btype);
@@ -88,11 +101,11 @@ namespace Game.Village
         {
             isOpen = !isOpen;
 
-            tab.DOAnchorPos(isOpen ? openPosition : closedPosition, moveDuration)
+            tab.DOMoveX(isOpen ? openPosition.x : closedPosition.x, moveDuration)
                .SetEase(Ease.InOutQuad);
 
             // Ok butonu döndürme
-            arrowButton.DORotate(new Vector3(0, 0, isOpen ? 180 : 0), 0, RotateMode.FastBeyond360)
+            arrowButton.DORotate(new Vector3(0, 0, !isOpen ? 180 : 0), 0, RotateMode.FastBeyond360)
                        .SetEase(Ease.InOutQuad);
         }
 

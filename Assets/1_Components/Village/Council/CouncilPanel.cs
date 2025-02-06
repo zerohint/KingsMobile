@@ -10,7 +10,10 @@ namespace Game.Village
         {
             UpdateView();
         }
-
+        private void Awake()
+        {
+            Initialize(BuildingType.Council);
+        }
         public void UpdateView()
         {
             buildingNameText.text = "Council";

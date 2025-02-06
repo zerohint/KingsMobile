@@ -17,6 +17,10 @@ namespace Game.Village
         private Barrack currentBarrack;
         private List<GameObject> spawnedSoldierEntries = new List<GameObject>();
 
+        private void Awake()
+        {
+            Initialize(BuildingType.Barrack);
+        }
         private void OnEnable()
         {
             UpdateView();
