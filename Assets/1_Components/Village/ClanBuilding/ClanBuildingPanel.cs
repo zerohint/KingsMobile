@@ -6,23 +6,16 @@ namespace Game.Village
 {
     public class ClanBuildingPanel : BuildingPanelBase
     {
-        [SerializeField] private TextMeshProUGUI buildingNameText;
         [SerializeField] private TextMeshProUGUI clanStatusText;
         [SerializeField] private GameObject clanListContainer;
         [SerializeField] private GameObject clanEntryPrefab;
 
-        private void OnEnable()
-        {
-            UpdateView();
-        }
+        public ClanBuilding CurrentBarrack => Building as ClanBuilding;
+
+        private ClanBuilding currentClanBuilding;
         private void Awake()
         {
             Initialize(BuildingType.ClanBuilding);
-        }
-
-        public void UpdateView()
-        {
-            buildingNameText.text = "Clan";
         }
     }
 }

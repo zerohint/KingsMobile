@@ -867,6 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9228e3c65b92a94fbd498910736685b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingType: 5
   buildingNameText: {fileID: 0}
 --- !u!1 &7114658016015617086
 GameObject:

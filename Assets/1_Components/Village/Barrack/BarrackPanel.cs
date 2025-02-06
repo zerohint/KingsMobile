@@ -8,12 +8,12 @@ namespace Game.Village
 {
     public class BarrackPanel : BuildingPanelBase
     {
-        [SerializeField] private TMP_Text buildingNameText;
         [SerializeField] private GameObject soldierEntryPrefab;
         [SerializeField] private GameObject RightPanelObject;
         [SerializeField] private Transform soldierListContainer;
 
-        
+        public Barrack CurrentBarrack => Building as Barrack;
+
         private Barrack currentBarrack;
         private List<GameObject> spawnedSoldierEntries = new List<GameObject>();
 
@@ -21,16 +21,6 @@ namespace Game.Village
         {
             Initialize(BuildingType.Barrack);
         }
-        private void OnEnable()
-        {
-            UpdateView();
-        }
-
-        public void UpdateView()
-        {
-            buildingNameText.text = "Kýþla";
-        }
-
         public void UpgradeBuilding()
         {
             PopupManager.Instance.ShowPopup(

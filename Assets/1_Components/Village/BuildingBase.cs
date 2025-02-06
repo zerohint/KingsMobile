@@ -13,6 +13,7 @@ namespace Game.Village
         protected void ShowPanel()
         {
             LeftPanel.Instance.OpenPanel(BuildingType);
+            LeftPanel.Instance.UpdatePanel(this);
         }
     }
 

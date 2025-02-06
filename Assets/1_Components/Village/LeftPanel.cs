@@ -10,7 +10,7 @@ namespace Game.Village
 {
     public class LeftPanel : MonoBehaviour
     {
-        public static LeftPanel Instance; // todo yap
+        public static LeftPanel Instance;
 
         [SerializeField] private Transform panelContainer;
 
@@ -51,27 +51,41 @@ namespace Game.Village
         public void OpenPanel(BuildingType btype)
         {
             var instantiatedPanel = panelsInstantiated.Find(panel => panel.BuildingType == btype);
-            if(instantiatedPanel == null)
+
+            if (instantiatedPanel == null)
             {
-                var prefab = Array.Find(panelPrefabs, panel => panel.BuildingType == btype);
+                BuildingPanelBase prefab = null;
+
+                foreach (var panel in panelPrefabs)
+                {
+                    if (panel.BuildingType == btype)
+                    {
+                        prefab = panel;
+                        break;
+                    }
+                }
+
+                if (prefab == null)
+                {
+                    return;
+                }
+
                 instantiatedPanel = Instantiate(prefab, panelContainer);
+                panelsInstantiated.Add(instantiatedPanel);
             }
 
-            if(currentPanel != null)
+            if (currentPanel != null)
                 currentPanel.SetActive(false);
+
             instantiatedPanel.SetActive(true);
             currentPanel = instantiatedPanel;
         }
-
-
-
 
         private BuildingBase currentBuilding;
         public void UpdatePanel(BuildingBase building)
         {
             currentBuilding = building;
             buildingNameText.text = building.name;
-
         }
 
         public void UpgradeBuilding()
@@ -104,7 +118,6 @@ namespace Game.Village
             tab.DOMoveX(isOpen ? openPosition.x : closedPosition.x, moveDuration)
                .SetEase(Ease.InOutQuad);
 
-            // Ok butonu döndürme
             arrowButton.DORotate(new Vector3(0, 0, !isOpen ? 180 : 0), 0, RotateMode.FastBeyond360)
                        .SetEase(Ease.InOutQuad);
         }

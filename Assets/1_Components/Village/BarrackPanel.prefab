@@ -640,6 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4b74d5eca12794a82114242b50741b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingType: 1
   buildingNameText: {fileID: 0}
   soldierEntryPrefab: {fileID: 2594443480528269074}
   RightPanelObject: {fileID: 2239850230212514084}

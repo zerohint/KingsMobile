@@ -5,19 +5,24 @@ namespace Game.Village
     public abstract class BuildingPanelBase : MonoBehaviour
     {
         [SerializeField]
-        private BuildingType buildingType; // Inspector üzerinden ayarlansýn
-
+        private BuildingType buildingType;
         public BuildingType BuildingType => buildingType;
 
-        // Ýstersen runtime'da atamak için
-        public virtual void Initialize(BuildingType type)
+        public BuildingBase Building { get; private set; }
+
+        public virtual void SetBuilding(BuildingBase building)
         {
-            buildingType = type;
+            Building = building;
         }
 
         public virtual void SetActive(bool active)
         {
             gameObject.SetActive(active);
+        }
+
+        public virtual void Initialize(BuildingType type)
+        {
+            buildingType = type;
         }
     }
 }

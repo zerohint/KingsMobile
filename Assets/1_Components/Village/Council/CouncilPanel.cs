@@ -5,18 +5,12 @@ namespace Game.Village
 {
     public class CouncilPanel : BuildingPanelBase
     {
-        [SerializeField] private TextMeshProUGUI buildingNameText;
-        private void OnEnable()
-        {
-            UpdateView();
-        }
+        public Council CurrentBarrack => Building as Council;
+
+        private Council currentCouncil;
         private void Awake()
         {
             Initialize(BuildingType.Council);
-        }
-        public void UpdateView()
-        {
-            buildingNameText.text = "Council";
         }
     }
 }
