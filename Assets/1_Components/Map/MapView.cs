@@ -14,19 +14,22 @@ namespace Game.Map
         [SerializeField] private Army armyPrefab;
         [Space]
         [SerializeField] private Transform entitiesParent;
-        // 19 tane waypoint referansý, Inspector üzerinden atanacak
         [SerializeField] private Transform[] waypointTransforms;
-        
+
         private FeudatoryDataSC[] feudatories;
-        
+
         public FirebaseFirestore firestore;
+
+        private void Awake()
+        {
+            firestore = FirebaseFirestore.DefaultInstance;
+        }
 
         private void Start()
         {
-            firestore = FirebaseFirestore.DefaultInstance;
             DrawEntities();
-            
         }
+
         private void OnEnable()
         {
             LoadArmiesFromFirestore();
@@ -44,7 +47,7 @@ namespace Game.Map
         }
 
         /// <summary>
-        /// Castle’leri instantiate eder.
+        /// Castle Instantiate
         /// </summary>
         private void DrawEntities()
         {
@@ -65,34 +68,29 @@ namespace Game.Map
         }
 
         /// <summary>
-        /// Firestore’daki "Armies" koleksiyonunu okuyup, her bir Army dokümaný için prefab instantiate eder.
+        /// Army Instantiate from firestore
         /// </summary>
         private async void LoadArmiesFromFirestore()
         {
             try
             {
                 QuerySnapshot snapshot = await firestore.Collection("Armies").GetSnapshotAsync();
-                Debug.Log("Firestore sorgusu tamamlandý. Doküman sayýsý: " + snapshot.Count);
+                Debug.Log("Firestore query completed. Document count: " + snapshot.Count);
 
                 foreach (DocumentSnapshot doc in snapshot.Documents)
                 {
-                    // Dokümandan ArmyFirestoreData modeline parse et
                     ArmyFirestoreData data = doc.ConvertTo<ArmyFirestoreData>();
-                    Debug.Log("Ýþlenen doküman ID: " + doc.Id);
+                    Debug.Log("Processed document ID: " + doc.Id);
 
-                    // Army prefab’ýný instantiate et
                     Army armyInstance = Instantiate(armyPrefab, entitiesParent);
-                    // Firestore doküman referansýný gönderiyoruz
                     armyInstance.InitializeFromFirestore(data, waypointTransforms, doc.Reference);
                 }
             }
             catch (System.Exception ex)
             {
-                Debug.LogError("Armies koleksiyonu okunamadý: " + ex);
+                Debug.LogError("Armies collection could not be read: " + ex);
             }
         }
-
-
 
         public FeudatoryDataSC datatowrite;
         public Transform[] trans;
@@ -106,4 +104,3 @@ namespace Game.Map
         }
     }
 }
-

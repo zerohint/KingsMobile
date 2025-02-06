@@ -12,21 +12,24 @@ namespace Map
         [SerializeField] private LayoutGroup starNest;
         [SerializeField] private ArmyStar armyStarPrefab;
 
+        // Newly added multiplier: to convert the distance between waypoints to realistic time (seconds/unit)
+        [SerializeField] private float distanceTimeMultiplier = 60f;
+
         private ArmyData armyData;
         private Transform[] waypoints;
         private Transform startWaypoint;
         private Transform destinationWaypoint;
 
-        private DateTime lastUpdateTime; // Firestore'dan çekilen son güncelleme zamaný
-        private DateTime startTime;      // Hareketin baþlangýç zamaný
-        private float journeyDuration;   // Gerçek dünya süresi (saniye cinsinden)
+        private DateTime lastUpdateTime; 
+        private DateTime startTime;      
+        private float journeyDuration;   
 
         private float progress;
-        [SerializeField] private float speedMultiplier = 0.1f; // Ekstra hýz çarpaný
+        [SerializeField] private float speedMultiplier = 0.1f;
 
         private DocumentReference firestoreDocRef;
-        private float lastFirestoreUpdateTime = 0f; // Son Firestore güncelleme zamaný
-        private const float firestoreUpdateInterval = 1200f; // 20 dakika (saniye)
+        private float lastFirestoreUpdateTime = 0f;
+        private const float firestoreUpdateInterval = 1200f;
 
         #region Unity Lifecycle
 
@@ -41,14 +44,12 @@ namespace Map
             progress = Mathf.Clamp01(elapsedTime / journeyDuration);
             transform.position = Vector3.Lerp(startWaypoint.position, destinationWaypoint.position, progress);
 
-            // 20 dakikada bir Firestore güncellemesi gönder
             if (Time.time - lastFirestoreUpdateTime > firestoreUpdateInterval)
             {
                 lastFirestoreUpdateTime = Time.time;
                 UpdateProgressInFirestore();
             }
 
-            // Hareket tamamlandýysa yeni hedef belirle
             if (progress >= 1f)
             {
                 ChooseNewDestination();
@@ -77,11 +78,11 @@ namespace Map
         }
 
         /// <summary>
-        /// Firestore'dan gelen verilerle Army'yi initialize eder.
+        /// Initializes Army with data from Firestore.
         /// </summary>
-        /// <param name="data">Firestore verileri</param>
-        /// <param name="waypointArray">Waypoint dizisi</param>
-        /// <param name="docRef">Firestore Document referansý</param>
+        /// <param name="data">Firestore data</param>
+        /// <param name="waypointArray">Waypoint array</param>
+        /// <param name="docRef">Firestore Document reference</param>
         public void InitializeFromFirestore(ArmyFirestoreData data, Transform[] waypointArray, DocumentReference docRef)
         {
             armyData = new ArmyData
@@ -98,7 +99,7 @@ namespace Map
 
             if (waypointArray == null || waypointArray.Length == 0)
             {
-                Debug.LogError("Waypoint dizisi boþ!");
+                Debug.LogError("Waypoint array is empty!");
                 return;
             }
 
@@ -112,6 +113,9 @@ namespace Map
             lastUpdateTime = data.lastUpdateTime.ToDateTime();
             startTime = lastUpdateTime;
             journeyDuration = data.travelTime;
+
+            // Ýsteðe baðlý: Eðer Firestore’dan gelen süre yerine gerçek mesafe üzerinden süre hesaplamak isterseniz:
+            // journeyDuration = Vector3.Distance(startWaypoint.position, destinationWaypoint.position) * distanceTimeMultiplier;
 
             Debug.Log($"Army loaded from Firestore. Start Time: {startTime}, Duration: {journeyDuration} sec");
         }
@@ -132,8 +136,12 @@ namespace Map
 
             startTime = DateTime.UtcNow;
             lastUpdateTime = startTime;
-            journeyDuration = UnityEngine.Random.Range(86400f, 259200f); // 1 ila 3 gün arasý
             progress = 0f;
+
+            // Gerçekçi süre hesaplamasý: start ve destination arasýndaki x/z bazlý mesafe * çarpan
+            float distance = Vector3.Distance(startWaypoint.position, destinationWaypoint.position);
+            journeyDuration = distance * distanceTimeMultiplier;
+            Debug.Log($"New target selected. Distance: {distance:F2}, Duration: {journeyDuration:F2} sec");
 
             UpdateMovementInFirestore(newTargetIndex);
         }
@@ -146,9 +154,9 @@ namespace Map
                 .ContinueWithOnMainThread(task =>
                 {
                     if (task.IsCompleted)
-                        Debug.Log("Progress güncellendi: " + progress);
+                        Debug.Log("Progress updated: " + progress);
                     else
-                        Debug.LogError("Progress güncelleme hatasý: " + task.Exception);
+                        Debug.LogError("Progress update error: " + task.Exception);
                 });
         }
 
@@ -170,9 +178,9 @@ namespace Map
                 .ContinueWithOnMainThread(task =>
                 {
                     if (task.IsCompleted)
-                        Debug.Log("Hareket verileri güncellendi.");
+                        Debug.Log("Movement data updated.");
                     else
-                        Debug.LogError("Hareket verisi güncelleme hatasý: " + task.Exception);
+                        Debug.LogError("Movement data update error: " + task.Exception);
                 });
         }
 
