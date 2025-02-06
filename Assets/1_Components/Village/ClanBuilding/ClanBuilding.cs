@@ -5,7 +5,7 @@ namespace Game.Village
 {
     public class ClanBuilding : BuildingBase
     {
-        public override BuildingType BuildingType => BuildingType.Center;
+        public override BuildingType BuildingType => BuildingType.ClanBuilding;
         public Clan ClanData { get; private set; }
 
         private void Start()

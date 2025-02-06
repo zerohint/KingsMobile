@@ -78,6 +78,7 @@ namespace Game.Village
                 currentPanel.SetActive(false);
 
             instantiatedPanel.SetActive(true);
+            ToggleTab();
             currentPanel = instantiatedPanel;
         }
 
@@ -103,12 +104,13 @@ namespace Game.Village
         }
         private void Start()
         {
-            isOpen = true;
+            isOpen = false;
             if (closeButton != null)
             {
                 closeButton.onClick.AddListener(ToggleTab);
             }
             upgradeButton.onClick.AddListener(UpgradeBuilding);
+            tab.DOMoveX(closedPosition.x, moveDuration);
         }
 
         public void ToggleTab()
