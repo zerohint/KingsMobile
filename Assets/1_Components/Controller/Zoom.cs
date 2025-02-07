@@ -15,6 +15,8 @@ public partial class CameraController
         internal override void Handle()
         {
             if (!enabled) return;
+            if (!ShouldProcessInput()) return;
+
 
             float scrollInput = Map.FindAction("Zoom").ReadValue<Vector2>().y;
 

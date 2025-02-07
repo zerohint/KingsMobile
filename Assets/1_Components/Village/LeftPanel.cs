@@ -104,13 +104,12 @@ namespace Game.Village
         }
         private void Start()
         {
-            isOpen = false;
+            isOpen = true;
             if (closeButton != null)
             {
                 closeButton.onClick.AddListener(ToggleTab);
             }
             upgradeButton.onClick.AddListener(UpgradeBuilding);
-            tab.DOMoveX(closedPosition.x, moveDuration);
         }
 
         public void ToggleTab()

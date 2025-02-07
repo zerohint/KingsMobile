@@ -25,6 +25,7 @@ public partial class CameraController
         internal override void Handle()
         {
             if (!enabled) return;
+            if (!ShouldProcessInput()) return; // UI üzerindeyse veya ekran dýþýndaysa input iþlenmez
 
             Vector2 moveInput = moveAction.ReadValue<Vector2>();
             Vector3 moveDirection = (CamT.right * moveInput.x) + (CamT.forward * moveInput.y);
@@ -47,13 +48,11 @@ public partial class CameraController
                 Vector2 deltaMousePosition = currentMousePosition - lastMousePosition;
 
                 Vector3 dragMovement = new Vector3(-deltaMousePosition.x, 0, -deltaMousePosition.y) * dragSpeed * Time.deltaTime;
-
                 Vector3 worldDrag = CamT.right * dragMovement.x + Vector3.ProjectOnPlane(CamT.forward, Vector3.up) * dragMovement.z;
 
                 CamT.position += worldDrag;
                 lastMousePosition = currentMousePosition;
             }
-
         }
     }
 }

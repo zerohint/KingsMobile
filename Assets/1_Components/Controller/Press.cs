@@ -13,7 +13,9 @@ public partial class CameraController
 
         internal override void Handle()
         {
-            if(!enabled) return;
+            if (!enabled) return;
+            if (!ShouldProcessInput()) return;
+
 
             if (Map.FindAction("Press").WasPressedThisFrame())
             {
