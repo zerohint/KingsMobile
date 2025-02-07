@@ -3,8 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public PlayerData playerData = new();
-
+    public PlayerData playerData = new PlayerData();
 
     private void Awake()
     {
@@ -27,20 +26,17 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("FirebaseManager sahnede yok!");
+            Debug.LogError("FirebaseManager is not on scene");
         }
     }
 
-
     private void OnFirebaseReady()
     {
-        FirebaseManager.Instance.LoadPlayerData((data) =>
+        FirebaseManager.Instance.LoadPlayerData(playerData.playerName, (data) =>
         {
             playerData = data;
         });
     }
-
-    
 
     public void SaveGame()
     {
@@ -48,29 +44,3 @@ public class GameManager : MonoBehaviour
     }
 }
 
-
-public class PlayerData
-{
-    public string playerName;
-    public int playerLevel = 0;
-    public int gold = 0;
-    public int food = 0;
-
-    public PlayerData()
-    {
-        Random();
-    }
-
-    public PlayerData(string playerName)
-    {
-        this.playerName = playerName;
-    }
-
-    public void Random()
-    {
-        playerName = "Player#" + 123/*UnityEngine.Random.Range(111, 999)*/;
-        playerLevel = 1;
-        gold = 1000;
-        food = 500;
-    }
-}

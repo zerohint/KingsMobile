@@ -25,7 +25,6 @@ namespace Map
         private float journeyDuration;   
 
         private float progress;
-        [SerializeField] private float speedMultiplier = 0.1f;
 
         private DocumentReference firestoreDocRef;
         private float lastFirestoreUpdateTime = 0f;

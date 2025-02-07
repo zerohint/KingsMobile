@@ -3,15 +3,13 @@ using Firebase;
 using Firebase.Firestore;
 using Firebase.Extensions;
 using System;
-using System.Threading.Tasks;
-using Google.MiniJSON;
+using System.Collections.Generic;
 
 public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance;
     public FirebaseFirestore firestore;
 
-    // Firebase hazır olduğunda tetiklenecek event
     public event Action OnFirebaseInitialized;
 
     private void Awake()
@@ -30,35 +28,6 @@ public class FirebaseManager : MonoBehaviour
     private void Start()
     {
         InitializeFirebase();
-        //LoadArmiesFromFirestore();
-    }
-
-    void LoadArmiesFromFirestore()
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        CollectionReference armiesRef = db.Collection("Armies");
-
-        armiesRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.IsFaulted || task.IsCanceled)
-            {
-                Debug.LogError("Firestore Query Error: " + task.Exception);
-                return;
-            }
-
-            QuerySnapshot snapshot = task.Result;
-            Debug.Log("Found " + snapshot.Count + " armies in Firestore.");
-
-            foreach (DocumentSnapshot doc in snapshot.Documents)
-            {
-                Debug.Log($"Army ID: {doc.Id}");
-
-                foreach (var field in doc.ToDictionary())
-                {
-                    Debug.Log($"{field.Key}: {field.Value}");
-                }
-            }
-        });
     }
 
     private void InitializeFirebase()
@@ -68,12 +37,12 @@ public class FirebaseManager : MonoBehaviour
             if (task.Result == DependencyStatus.Available)
             {
                 firestore = FirebaseFirestore.DefaultInstance;
-                Debug.Log("Firebase Firestore başarıyla başlatıldı.");
+                Debug.Log("Firebase Firestore has been started successfully.");
                 OnFirebaseInitialized?.Invoke();
             }
             else
             {
-                Debug.LogError("Firebase bağımlılık hatası: " + task.Result);
+                Debug.LogError("Firebase dependency error:" + task.Result);
             }
         });
     }
@@ -82,78 +51,95 @@ public class FirebaseManager : MonoBehaviour
     {
         if (firestore == null)
         {
-            Debug.LogError("Firestore henüz initialize edilmedi!");
+            Debug.LogError("Firestore is not initialized yet!");
             return;
         }
 
-        // TODO: kalkacak
-        var data = new { json = JsonUtility.ToJson(playerData, true) };
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { FKeys.PLAYER_NAME, playerData.playerName },
+            { FKeys.PLAYER_LEVEL, playerData.playerLevel },
+            { FKeys.GOLD, playerData.gold },
+            { FKeys.FOOD, playerData.food }
+        };
 
-        firestore.Collection(FKeys.GAME_DATA).Document(FKeys.SAVE_DATA).SetAsync(data)
+        firestore.Collection(FKeys.PLAYER_COLLECTION)
+            .Document(playerData.playerName)
+            .SetAsync(data)
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted)
                 {
-                    Debug.Log("Game data Firestore'a kaydedildi.");
+                    Debug.Log("Player data saved to Firestore.");
                     onComplete?.Invoke();
                 }
                 else
                 {
-                    Debug.LogError("Veri kaydetme hatası: " + task.Exception);
+                    Debug.LogError("Data saving error: " + task.Exception);
                 }
             });
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="onDataLoaded"></param>
-    public void LoadPlayerData(Action<PlayerData> onDataLoaded)
+    public void LoadPlayerData(string playerName, Action<PlayerData> onDataLoaded)
     {
         if (firestore == null)
         {
-            Debug.LogError("Firestore henüz initialize edilmedi!");
+            Debug.LogError("Firestore is not initialized yet!");
             return;
         }
-
-        firestore.Collection(FKeys.GAME_DATA).Document(FKeys.SAVE_DATA).GetSnapshotAsync()
+        if (playerName == null)
+        {
+            playerName = "Player#" + UnityEngine.Random.Range(111, 999);
+        }
+        firestore.Collection(FKeys.PLAYER_COLLECTION)
+            .Document(playerName)
+            .GetSnapshotAsync()
             .ContinueWithOnMainThread(task =>
             {
-                PlayerData ret = new();
                 if (task.IsCompleted)
                 {
                     DocumentSnapshot snapshot = task.Result;
                     if (snapshot.Exists)
                     {
-                        string jsonData = snapshot.GetValue<string>(FKeys.JSON);
-                        if (!string.IsNullOrEmpty(jsonData)) JsonUtility.FromJsonOverwrite(jsonData, ret);
+                        PlayerData ret = new PlayerData();
+                        ret.playerName = snapshot.GetValue<string>(FKeys.PLAYER_NAME);
+                        ret.playerLevel = snapshot.GetValue<int>(FKeys.PLAYER_LEVEL);
+                        ret.gold = snapshot.GetValue<int>(FKeys.GOLD);
+                        ret.food = snapshot.GetValue<int>(FKeys.FOOD);
+                        Debug.Log("Player data loaded.");
+                        onDataLoaded?.Invoke(ret);
                     }
                     else
                     {
-                        Debug.LogWarning("No data on db, new data created.");
+                        Debug.LogWarning("No data found in the database, new data is being created.");
+
+                        PlayerData newData = new PlayerData(playerName);
+                        SavePlayerData(newData, () =>
+                        {
+                            Debug.Log("New player data has been created and saved.");
+                            onDataLoaded?.Invoke(newData);
+                        });
                     }
-                    onDataLoaded?.Invoke(ret);
                 }
                 else
                 {
-                    AlertPanel.Alert("Task error: " + task.Exception);
+                    Debug.LogError("Task error: " + task.Exception);
                 }
             });
     }
 
-   
-
     public static class FKeys
     {
-        // Tables
-        public const string GAME_DATA = "GameData";
+        public const string PLAYER_COLLECTION = "PlayerData";
 
-        // Documents
-        public const string SAVE_DATA = "SaveData";
+        public const string PLAYER_NAME = "playerName";
 
-        // Keys
-        public const string JSON = "json";
+        public const string PLAYER_LEVEL = "playerLevel";
+
+        public const string GOLD = "gold";
+
+        public const string FOOD = "food";
+
+
     }
 }
-
-
