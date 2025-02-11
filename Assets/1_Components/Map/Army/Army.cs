@@ -4,15 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using Firebase.Firestore;
 using Firebase.Extensions;
+using Game.Map;
 
 namespace Map
 {
+
+    [System.Serializable]
+    public class Feudatory
+    {
+        public string feudatoryName;   // Feudatory adý
+        public Transform location;     // Konum (opsiyonel, UI'da gösterilebilir)
+    }
+
     public class Army : MapObjectBase
     {
         [SerializeField] private LayoutGroup starNest;
         [SerializeField] private ArmyStar armyStarPrefab;
 
-        // Newly added multiplier: to convert the distance between waypoints to realistic time (seconds/unit)
         [SerializeField] private float distanceTimeMultiplier = 60f;
 
         private ArmyData armyData;
@@ -32,7 +40,31 @@ namespace Map
 
         #region Unity Lifecycle
 
-        public override void OnPress() => Debug.Log("Army pressed");
+        public override void OnPress()
+        {
+            // Army panelini aç (diðer paneller kapansýn)
+            MapManager.Instance.ShowPanel(PanelType.Army);
+
+            // start ve destination waypoint’lerin indekslerini buluyoruz.
+            int startIndex = Array.IndexOf(waypoints, startWaypoint);
+            int destinationIndex = Array.IndexOf(waypoints, destinationWaypoint);
+
+            if (startIndex < 0 || destinationIndex < 0)
+            {
+                Debug.LogError("Waypoints dizisinde start veya destination bulunamadý!");
+                return;
+            }
+
+            // MapView üzerinden feudatories dizisini alýyoruz.
+            FeudatoryDataSC[] feudatories = MapView.Instance.feudatories;
+
+
+            FeudatoryDataSC startFeudatory = feudatories[startIndex];
+            FeudatoryDataSC destinationFeudatory = feudatories[destinationIndex];
+
+            // UI'da Army panelindeki ilgili Image'lara Icon atamasý yapýyoruz.
+            MapManager.Instance.UpdateArmyPanelFeudatories(startFeudatory, destinationFeudatory,progress);
+        }
 
         private void Update()
         {
@@ -113,8 +145,6 @@ namespace Map
             startTime = lastUpdateTime;
             journeyDuration = data.travelTime;
 
-            // Ýsteðe baðlý: Eðer Firestore’dan gelen süre yerine gerçek mesafe üzerinden süre hesaplamak isterseniz:
-            // journeyDuration = Vector3.Distance(startWaypoint.position, destinationWaypoint.position) * distanceTimeMultiplier;
 
             Debug.Log($"Army loaded from Firestore. Start Time: {startTime}, Duration: {journeyDuration} sec");
         }

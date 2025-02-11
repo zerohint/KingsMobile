@@ -10,18 +10,20 @@ namespace Game.Map
 {
     public class MapView : MonoBehaviour
     {
+        public static MapView Instance { get; private set; }
         [SerializeField] private Castle castlePrefab;
         [SerializeField] private Army armyPrefab;
         [Space]
         [SerializeField] private Transform entitiesParent;
         [SerializeField] private Transform[] waypointTransforms;
 
-        private FeudatoryDataSC[] feudatories;
+        public FeudatoryDataSC[] feudatories;
 
         public FirebaseFirestore firestore;
 
         private void Awake()
         {
+            Instance = this;
             firestore = FirebaseFirestore.DefaultInstance;
         }
 
@@ -52,7 +54,7 @@ namespace Game.Map
         private void DrawEntities()
         {
             // pooling etc.
-            feudatories ??= SCDB.GetAll<FeudatoryDataSC>().ToArray();
+            feudatories = SCDB.GetAll<FeudatoryDataSC>().ToArray();
 
             foreach (var feudatory in feudatories)
             {

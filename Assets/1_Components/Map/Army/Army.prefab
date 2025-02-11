@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6253094173666669396}
   - component: {fileID: 2485739961723269383}
+  - component: {fileID: 5765710122316956263}
   m_Layer: 0
   m_Name: Army
   m_TagString: Untagged
@@ -49,6 +50,28 @@ MonoBehaviour:
   starNest: {fileID: 8180225365436379130}
   armyStarPrefab: {fileID: -8569511525924475386, guid: 0d8d01ccfae521e4eb4ccf46f8e03486,
     type: 3}
+  distanceTimeMultiplier: 60
+--- !u!65 &5765710122316956263
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4168775310969359312}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9, y: 9, z: 4}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!1 &6131922000341994153
 GameObject:
   m_ObjectHideFlags: 0

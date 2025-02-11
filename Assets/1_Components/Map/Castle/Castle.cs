@@ -16,7 +16,7 @@ namespace Game.Map
         public override void OnPress()
         {
             ShowCastleInfoPanel(castleData);
-            ShowPanel();
+            MapManager.Instance.ShowPanel(PanelType.Castle);
         }
 
         private void ShowCastleInfoPanel(CastleData data)

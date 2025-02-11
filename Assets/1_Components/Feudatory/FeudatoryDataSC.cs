@@ -13,6 +13,8 @@ public class FeudatoryDataSC : ScriptableObject
     [field:SerializeField] public Color ThemeColor { get; private set; }
     [field:SerializeField] public Castle[] Castles { get; private set; } = new Castle[4];
 
+    //merkez pozisyon
+
     [Serializable]
     public struct Castle
     {

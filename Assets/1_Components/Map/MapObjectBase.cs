@@ -1,4 +1,4 @@
-using Game.Village;
+using Game.Map;
 using UnityEngine;
 
 public abstract class MapObjectBase : MonoBehaviour, IPressObject
@@ -7,6 +7,5 @@ public abstract class MapObjectBase : MonoBehaviour, IPressObject
     public abstract void OnPress();
     protected void ShowPanel()
     {
-        MapManager.Instance.ShowBuildingPanel(this);
     }
 }
