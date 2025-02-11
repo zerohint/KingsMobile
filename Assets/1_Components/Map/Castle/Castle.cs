@@ -17,6 +17,8 @@ namespace Game.Map
         {
             ShowCastleInfoPanel(castleData);
             MapManager.Instance.ShowPanel(PanelType.Castle);
+            MapManager.Instance.UpdateCastleName(castleData);
+
         }
 
         private void ShowCastleInfoPanel(CastleData data)

@@ -29,7 +29,8 @@ namespace Game.Map
 
         private void Start()
         {
-            DrawEntities();
+            DrawEntities(); 
+            Write();
         }
 
         private void OnEnable()
@@ -53,21 +54,23 @@ namespace Game.Map
         /// </summary>
         private void DrawEntities()
         {
-            // pooling etc.
+            // Tüm feudatory'leri al
             feudatories = SCDB.GetAll<FeudatoryDataSC>().ToArray();
 
+            // Her feudatory için
             foreach (var feudatory in feudatories)
             {
+                // Feudatory içindeki tüm kaleleri spawnla
                 for (int i = 0; i < feudatory.Castles.Length; i++)
                 {
-                    var castle = feudatory.Castles[i];
-                    var castleGO = Instantiate(castlePrefab, CoordinateToV3(castle.Coordinate), Quaternion.identity);
-                    castleGO.transform.SetParent(entitiesParent);
-                    castleGO.name = $"{feudatory.Name} Castle {i}";
+                    var castleData = feudatory.Castles[i];
+                    Vector3 spawnPosition = CoordinateToV3(castleData.Coordinate);
+                    var castleInstance = Instantiate(castlePrefab, spawnPosition, Quaternion.identity, entitiesParent);
+                    castleInstance.name = $"{feudatory.Name} Castle {i}";
                 }
-                break;
             }
         }
+
 
         /// <summary>
         /// Army Instantiate from firestore
@@ -94,15 +97,45 @@ namespace Game.Map
             }
         }
 
-        public FeudatoryDataSC datatowrite;
-        public Transform[] trans;
         [ContextMenu("Write")]
         public void Write()
         {
-            for (int i = 0; i < 4; i++)
+            // Eðer feudatories dizisi ve waypointTransforms dizisi eþleþmiyorsa hata ver
+            if (feudatories == null || waypointTransforms == null || feudatories.Length != waypointTransforms.Length)
             {
-                datatowrite.Castles[i].Coordinate = V3ToCoordinate(trans[i].position);
+                Debug.LogError("Feudatories ve waypointTransforms sayýsý uyuþmuyor!");
+                return;
+            }
+
+            // Her bir waypoint için
+            for (int i = 0; i < waypointTransforms.Length; i++)
+            {
+                Transform waypoint = waypointTransforms[i];
+
+                if (waypoint.childCount < 4)
+                {
+                    Debug.LogError($"Waypoint '{waypoint.name}' yeterli sayýda (4) çocuk içermiyor!");
+                    continue;
+                }
+
+                // Her bir waypoint'in 4 çocuk kale için
+                for (int j = 0; j < 4; j++)
+                {
+                    Transform castleTransform = waypoint.GetChild(j);
+
+                    // Ýlgili feudatory'nin Castles dizisinde yeterli eleman olduðundan emin ol
+                    if (feudatories[i].Castles != null && feudatories[i].Castles.Length > j)
+                    {
+                        feudatories[i].Castles[j].Coordinate = V3ToCoordinate(castleTransform.position);
+                    }
+                    else
+                    {
+                        Debug.LogError($"Feudatory '{feudatories[i].Name}' için Castles dizisi eksik!");
+                    }
+                }
             }
         }
+
+
     }
 }

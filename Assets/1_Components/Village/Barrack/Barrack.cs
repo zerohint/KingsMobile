@@ -12,7 +12,6 @@ namespace Game.Village
 
         private void Start()
         {
-            // Üretilebilecek asker türleri (isteðe baðlý olarak bu liste geniþletilebilir)
             AvailableSoldiers = new List<SoldierInfo>
             {
                 new SoldierInfo(SoldierType.Suvari, 35),
@@ -24,7 +23,8 @@ namespace Game.Village
         {
             return JsonUtility.ToJson(new Data()
             {
-                AvailableSoldiers = AvailableSoldiers
+                AvailableSoldiers = AvailableSoldiers,
+                currentUpgradeStage = currentUpgradeStage // BuildingBase'teki deðer
             });
         }
 
@@ -32,12 +32,7 @@ namespace Game.Village
         {
             Data data = JsonUtility.FromJson<Data>(dataString);
             AvailableSoldiers = data.AvailableSoldiers;
-        }
-
-        [Serializable]
-        private struct Data
-        {
-            public List<SoldierInfo> AvailableSoldiers;
+            currentUpgradeStage = data.currentUpgradeStage;
         }
 
         public override void OnPress()
@@ -45,7 +40,12 @@ namespace Game.Village
             ShowPanel();
         }
 
-        
+        [Serializable]
+        private struct Data
+        {
+            public List<SoldierInfo> AvailableSoldiers;
+            public int currentUpgradeStage;
+        }
 
         [Serializable]
         public class SoldierInfo

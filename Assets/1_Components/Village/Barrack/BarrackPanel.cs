@@ -12,6 +12,7 @@ namespace Game.Village
         [SerializeField] private GameObject RightPanelObject;
         [SerializeField] private Transform soldierListContainer;
 
+        [SerializeField] private BuildingUpgradeData upgradeData;
         public Barrack CurrentBarrack => Building as Barrack;
 
         private Barrack currentBarrack;
@@ -23,16 +24,34 @@ namespace Game.Village
         }
         public void UpgradeBuilding()
         {
-            PopupManager.Instance.ShowPopup(
-                "Bu binayý yükseltmek istediðine emin misin?",
-                () => {
-                    Debug.Log("Bina upgrade edildi!");
-                    // Upgrade iþlemini burada yap
-                },
-                () => {
-                    Debug.Log("Upgrade iptal edildi.");
-                }
-            );
+            int currentStageLevel = CurrentBarrack.CurrentUpgradeStage;
+
+            UpgradeStage nextStage = upgradeData.upgradeStages.Find(stage => stage.stageLevel == currentStageLevel + 1);
+
+            if (nextStage != null)
+            {
+                string message = $"Level {nextStage.stageLevel} için yükseltme:\n" +
+                                 $"Gerekli bina seviyesi: {nextStage.requiredBuildingLevel}\n" +
+                                 $"Zümrüt: {nextStage.gemCost}\n" +
+                                 $"Tahýl: {nextStage.grainCost}\n" +
+                                 $"Sikke: {nextStage.coinCost}";
+
+                PopupManager.Instance.ShowPopup(
+                    message,
+                    () =>
+                    {
+                        Debug.Log($"Bina level {nextStage.stageLevel}'ye yükseltildi!");
+                    },
+                    () =>
+                    {
+                        Debug.Log("Upgrade iptal edildi.");
+                    }
+                );
+            }
+            else
+            {
+                Debug.Log("Daha fazla upgrade aþamasý bulunmuyor.");
+            }
         }
     }
 }

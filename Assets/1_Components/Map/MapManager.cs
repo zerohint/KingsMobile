@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
+using Game.Map;
+using Map;
 
 public enum PanelType
 {
@@ -15,11 +18,16 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject castlePanel;
     [SerializeField] private GameObject armyPanel;
 
-    // Army panelindeki UI öðeleri (örneðin Image alanlarý)
+    // Armypanel UI
+    [SerializeField] private TMP_Text SoldierName;
     [SerializeField] private Image armyStartLocationImage;
     [SerializeField] private Image armyDestinationLocationImage;
     [SerializeField] private Slider progressSlider;
-    [SerializeField] private Text progressText;
+    [SerializeField] private TMP_Text progressText;
+
+    // CastlePanel UI
+    [SerializeField] private TMP_Text CastleName;
+
 
     private Dictionary<PanelType, GameObject> panels;
 
@@ -33,21 +41,17 @@ public class MapManager : MonoBehaviour
         };
     }
 
-    /// <summary>
-    /// Belirtilen paneli açar, diðer panelleri kapatýr.
-    /// </summary>
     public void ShowPanel(PanelType panelToShow)
     {
         foreach (var panel in panels)
             panel.Value.SetActive(panel.Key == panelToShow);
     }
 
-    /// <summary>
-    /// Army panelindeki baþlangýç ve varýþ Feudatory verilerinin Icon'larýný UI'ya atar.
-    /// </summary>
-    public void UpdateArmyPanelFeudatories(FeudatoryDataSC startFeudatory, FeudatoryDataSC destinationFeudatory, float progress)
+    #region Army Panel Codes
+    public void UpdateArmyPanelFeudatories(FeudatoryDataSC startFeudatory, FeudatoryDataSC destinationFeudatory, float progress,ArmyData data)
     {
         UpdateProgress(progress);
+        SoldierName.text=data.armyName;
 
         if (armyStartLocationImage != null)
             armyStartLocationImage.sprite = startFeudatory.Icon;
@@ -61,6 +65,14 @@ public class MapManager : MonoBehaviour
             progressSlider.value = progress;
 
         if (progressText != null)
-            progressText.text = $"Tamamlanma: {(progress * 100f):F1}%";
+            progressText.text = $"{(progress * 100f):F1}%";
     }
+    #endregion
+
+    #region Castle Panel Codes
+    public void UpdateCastleName(CastleData data)
+    {
+        CastleName.text=data.castleName;
+    }
+    #endregion
 }

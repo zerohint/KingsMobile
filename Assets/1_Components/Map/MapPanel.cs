@@ -6,7 +6,6 @@ using TMPro;
 
 public class MapPanel : MonoBehaviour
 {
-    [SerializeField] private TMP_Text mapObjectNameText;
     [SerializeField] private GameObject panelGO;
     [SerializeField] private Canvas canvas;
 
@@ -46,10 +45,6 @@ public class MapPanel : MonoBehaviour
         {
             closeButton.onClick.RemoveListener(ToggleTab);
         }
-    }
-    public void UpdatePanel(PanelData data)
-    {
-        mapObjectNameText.text = data.name;
     }
     public void SetActive(bool active)
     {

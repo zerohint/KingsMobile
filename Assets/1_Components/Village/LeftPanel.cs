@@ -91,16 +91,24 @@ namespace Game.Village
 
         public void UpgradeBuilding()
         {
-            PopupManager.Instance.ShowPopup(
-                "Bu binayý yükseltmek istediðine emin misin?",
-                () => {
-                    Debug.Log("Bina upgrade edildi!");
-                    // Buraya upgrade iþlemi eklenecek
-                },
-                () => {
-                    Debug.Log("Upgrade iptal edildi.");
-                }
-            );
+            BuildingBase building = GetCurrentBuilding();
+            if (building != null)
+            {
+                PopupManager.Instance.ShowPopup(
+                    "Bu binayý yükseltmek istediðine emin misin?",
+                    () => {
+                        building.Upgrade();
+                        Debug.Log("Bina upgrade edildi!");
+                    },
+                    () => {
+                        Debug.Log("Upgrade iptal edildi.");
+                    }
+                );
+            }
+            else
+            {
+                Debug.LogWarning("Aktif bina bulunamadý!");
+            }
         }
         private void Start()
         {

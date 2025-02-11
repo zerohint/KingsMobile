@@ -12,6 +12,7 @@ public class FeudatoryDataSC : ScriptableObject
     [field:SerializeField, TextArea] public string Description { get; private set; }
     [field:SerializeField] public Color ThemeColor { get; private set; }
     [field:SerializeField] public Castle[] Castles { get; private set; } = new Castle[4];
+    [field: SerializeField] public Coordinate CenterPosition { get; set; } // Merkez koordinat
 
     //merkez pozisyon
 

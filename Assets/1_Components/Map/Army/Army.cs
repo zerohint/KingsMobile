@@ -63,7 +63,7 @@ namespace Map
             FeudatoryDataSC destinationFeudatory = feudatories[destinationIndex];
 
             // UI'da Army panelindeki ilgili Image'lara Icon atamasý yapýyoruz.
-            MapManager.Instance.UpdateArmyPanelFeudatories(startFeudatory, destinationFeudatory,progress);
+            MapManager.Instance.UpdateArmyPanelFeudatories(startFeudatory, destinationFeudatory,progress,armyData);
         }
 
         private void Update()
