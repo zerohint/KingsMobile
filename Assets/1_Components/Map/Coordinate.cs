@@ -6,25 +6,13 @@ namespace Game.Map
     [System.Serializable]
     public struct Coordinate
     {
-        private float _x;
-        private float _y;
-
-        public float x
-        {
-            get => _x;
-            set => _x = Mathf.Clamp(value, -1f, 1f);
-        }
-
-        public float y
-        {
-            get => _y;
-            set => _y = Mathf.Clamp(value, -1f, 1f);
-        }
+        public float x;
+        public float y;
 
         public Coordinate(float x, float y)
         {
-            _x = Mathf.Clamp(x, -1f, 1f);
-            _y = Mathf.Clamp(y, -1f, 1f);
+            this.x = x;
+            this.y = y;
         }
 
         public static Coordinate zero = new(0, 0);
@@ -58,7 +46,6 @@ namespace Game.Map
         }
 
         public static Coordinate operator +(Coordinate a, Coordinate b) => new(a.x + b.x, a.y + b.y);
-
         public static Coordinate operator -(Coordinate a, Coordinate b) => new(a.x - b.x, a.y - b.y);
 
         public static bool operator ==(Coordinate lhs, Coordinate rhs)

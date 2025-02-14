@@ -30,27 +30,27 @@ namespace Game.Village
 
             if (nextStage != null)
             {
-                string message = $"Level {nextStage.stageLevel} için yükseltme:\n" +
-                                 $"Gerekli bina seviyesi: {nextStage.requiredBuildingLevel}\n" +
-                                 $"Zümrüt: {nextStage.gemCost}\n" +
-                                 $"Tahýl: {nextStage.grainCost}\n" +
-                                 $"Sikke: {nextStage.coinCost}";
+                string message = $"Level {nextStage.stageLevel} Upgrade:\n" +
+                                 $"Required building level: {nextStage.requiredBuildingLevel}\n" +
+                                 $"Emerald: {nextStage.gemCost}\n" +
+                                 $"Grain: {nextStage.grainCost}\n" +
+                                 $"Coin: {nextStage.coinCost}";
 
                 PopupManager.Instance.ShowPopup(
                     message,
                     () =>
                     {
-                        Debug.Log($"Bina level {nextStage.stageLevel}'ye yükseltildi!");
+                        Debug.Log($"Building upgraded to level {nextStage.stageLevel}");
                     },
                     () =>
                     {
-                        Debug.Log("Upgrade iptal edildi.");
+                        Debug.Log("Upgrade canceled.");
                     }
                 );
             }
             else
             {
-                Debug.Log("Daha fazla upgrade aþamasý bulunmuyor.");
+                Debug.Log("There are no more upgrade stages.");
             }
         }
     }

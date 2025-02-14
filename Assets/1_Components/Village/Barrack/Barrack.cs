@@ -24,7 +24,7 @@ namespace Game.Village
             return JsonUtility.ToJson(new Data()
             {
                 AvailableSoldiers = AvailableSoldiers,
-                currentUpgradeStage = currentUpgradeStage // BuildingBase'teki deðer
+                currentUpgradeStage = currentUpgradeStage
             });
         }
 

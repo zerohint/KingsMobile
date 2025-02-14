@@ -25,7 +25,7 @@ namespace Game.Village
         [SerializeField] private GameObject panelGO;
         [SerializeField] private Canvas canvas;
 
-        [Header("Animasyon Ayarlarý")]
+        [Header("Animasyon Settings")]
         public float moveDuration = 0.5f;
         public float rotateDuration = 0.3f;
 
@@ -95,19 +95,19 @@ namespace Game.Village
             if (building != null)
             {
                 PopupManager.Instance.ShowPopup(
-                    "Bu binayý yükseltmek istediðine emin misin?",
+                    "Are you sure you want to upgrade this building?",
                     () => {
                         building.Upgrade();
-                        Debug.Log("Bina upgrade edildi!");
+                        Debug.Log("The building has been upgraded!");
                     },
                     () => {
-                        Debug.Log("Upgrade iptal edildi.");
+                        Debug.Log("Upgrade canceled.");
                     }
                 );
             }
             else
             {
-                Debug.LogWarning("Aktif bina bulunamadý!");
+                Debug.LogWarning("No active buildings found!");
             }
         }
         private void Start()

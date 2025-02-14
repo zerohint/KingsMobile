@@ -3,14 +3,14 @@ using System;
 [Serializable]
 public class UpgradeStage
 {
-    // Bu aþamanýn sýra numarasý veya aþama seviyesi (ör. 1, 2, 3, ...)
+    // Sequence number or stage level of this stage (e.g. 1, 2, 3, ...)
     public int stageLevel;
 
-    // Bina yükseltmesi için gereken bina seviyesi (ör. 10, 15, 20, ...)
+    // Building level required for building upgrade (e.g. 10, 15, 20, ...)
     public int requiredBuildingLevel;
 
-    // Maliyet bilgileri
-    public int gemCost;   // Zümrüt maliyeti
-    public int grainCost; // Tahýl maliyeti
-    public int coinCost;  // Sikke maliyeti
+    // Cost information
+    public int gemCost;
+    public int grainCost;
+    public int coinCost;
 }

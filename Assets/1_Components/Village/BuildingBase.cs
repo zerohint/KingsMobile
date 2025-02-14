@@ -15,21 +15,20 @@ namespace Game.Village
             LeftPanel.Instance.UpdatePanel(this);
         }
 
-        // Tüm binalarda ortak upgrade aþamasý
         [SerializeField]
         protected int currentUpgradeStage = 1;
         public int CurrentUpgradeStage => currentUpgradeStage;
 
         /// <summary>
-        /// Bina yükseltme iþlemini gerçekleþtirir.
-        /// Tüm binalar için ortak mantýk buraya yazýlabilir.
-        /// Eðer özel bir davranýþ isterseniz, override edebilirsiniz.
+        /// Performs the building upgrade process.
+        /// Common logic for all buildings can be written here.
+        /// If you want a special behavior, you can override it.
         /// </summary>
         public virtual void Upgrade()
         {
             currentUpgradeStage++;
-            Debug.Log($"{name} {currentUpgradeStage}. aþamaya yükseltildi.");
-            // Ortak yükseltme iþlemleri (ör. kaynak tüketimi, stat artýþý vs.) buraya eklenebilir.
+            Debug.Log($"{name} {currentUpgradeStage}. upgraded.");
+            // Common upgrade operations (e.g. resource consumption, stat increase, etc.) can be added here.
         }
     }
 

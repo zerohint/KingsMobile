@@ -30,7 +30,7 @@ namespace Game.Map
         private void Start()
         {
             DrawEntities(); 
-            Write();
+            //Write();
         }
 
         private void OnEnable()
@@ -54,13 +54,10 @@ namespace Game.Map
         /// </summary>
         private void DrawEntities()
         {
-            // Tüm feudatory'leri al
             feudatories = SCDB.GetAll<FeudatoryDataSC>().ToArray();
 
-            // Her feudatory için
             foreach (var feudatory in feudatories)
             {
-                // Feudatory içindeki tüm kaleleri spawnla
                 for (int i = 0; i < feudatory.Castles.Length; i++)
                 {
                     var castleData = feudatory.Castles[i];
@@ -100,37 +97,33 @@ namespace Game.Map
         [ContextMenu("Write")]
         public void Write()
         {
-            // Eðer feudatories dizisi ve waypointTransforms dizisi eþleþmiyorsa hata ver
             if (feudatories == null || waypointTransforms == null || feudatories.Length != waypointTransforms.Length)
             {
-                Debug.LogError("Feudatories ve waypointTransforms sayýsý uyuþmuyor!");
+                Debug.LogError("Number of Feudatories and waypointTransforms do not match!");
                 return;
             }
 
-            // Her bir waypoint için
             for (int i = 0; i < waypointTransforms.Length; i++)
             {
                 Transform waypoint = waypointTransforms[i];
 
                 if (waypoint.childCount < 4)
                 {
-                    Debug.LogError($"Waypoint '{waypoint.name}' yeterli sayýda (4) çocuk içermiyor!");
+                    Debug.LogError($"Waypoint '{waypoint.name}' does not contain enough (4) children!");
                     continue;
                 }
 
-                // Her bir waypoint'in 4 çocuk kale için
                 for (int j = 0; j < 4; j++)
                 {
                     Transform castleTransform = waypoint.GetChild(j);
 
-                    // Ýlgili feudatory'nin Castles dizisinde yeterli eleman olduðundan emin ol
                     if (feudatories[i].Castles != null && feudatories[i].Castles.Length > j)
                     {
                         feudatories[i].Castles[j].Coordinate = V3ToCoordinate(castleTransform.position);
                     }
                     else
                     {
-                        Debug.LogError($"Feudatory '{feudatories[i].Name}' için Castles dizisi eksik!");
+                        Debug.LogError($"Feudatory Castles array for '{feudatories[i].Name}' is missing!");
                     }
                 }
             }

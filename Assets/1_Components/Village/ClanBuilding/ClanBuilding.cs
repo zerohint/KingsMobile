@@ -10,7 +10,6 @@ namespace Game.Village
 
         private void Start()
         {
-            // Varsayýlan deðerler (isteðe baðlý olarak deðiþtirilebilir)
             ClanData = new Clan(1, 10);
         }
 

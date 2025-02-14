@@ -16,7 +16,7 @@ public class MapPanel : MonoBehaviour
     public Transform arrowButton;
     private bool isOpen = false;
 
-    [Header("Animasyon Ayarlarý")]
+    [Header("Animasyon Settings")]
     public float moveDuration = 0.5f;
     public float rotateDuration = 0.3f;
     private void Start()
