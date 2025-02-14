@@ -12,8 +12,8 @@ namespace Map
     [System.Serializable]
     public class Feudatory
     {
-        public string feudatoryName;   // Feudatory adý
-        public Transform location;     // Konum (opsiyonel, UI'da gösterilebilir)
+        public string feudatoryName;   // Feudatory adÄ±
+        public Transform location;     // Konum (opsiyonel, UI'da gÃ¶sterilebilir)
     }
 
     public class Army : MapObjectBase
@@ -42,28 +42,28 @@ namespace Map
 
         public override void OnPress()
         {
-            // Army panelini aç (diðer paneller kapansýn)
+            // Army panelini aÃ§ (diÄŸer paneller kapansÄ±n)
             MapManager.Instance.ShowPanel(PanelType.Army);
 
-            // start ve destination waypoint’lerin indekslerini buluyoruz.
+            // start ve destination waypointâ€™lerin indekslerini buluyoruz.
             int startIndex = Array.IndexOf(waypoints, startWaypoint);
             int destinationIndex = Array.IndexOf(waypoints, destinationWaypoint);
 
             if (startIndex < 0 || destinationIndex < 0)
             {
-                Debug.LogError("Waypoints dizisinde start veya destination bulunamadý!");
+                Debug.LogError("Waypoints dizisinde start veya destination bulunamadÄ±!");
                 return;
             }
 
-            // MapView üzerinden feudatories dizisini alýyoruz.
+            // MapView Ã¼zerinden feudatories dizisini alÄ±yoruz.
             FeudatoryDataSC[] feudatories = MapView.Instance.feudatories;
 
 
             FeudatoryDataSC startFeudatory = feudatories[startIndex];
             FeudatoryDataSC destinationFeudatory = feudatories[destinationIndex];
 
-            // UI'da Army panelindeki ilgili Image'lara Icon atamasý yapýyoruz.
-            MapManager.Instance.UpdateArmyPanelFeudatories(startFeudatory, destinationFeudatory,progress,armyData);
+            // UI'da Army panelindeki ilgili Image'lara Icon atamasÄ± yapÄ±yoruz.
+            MapManager.Instance.UpdateArmyPanelFeudatories(startFeudatory, destinationFeudatory,progress,journeyDuration,armyData);
         }
 
         private void Update()
@@ -167,7 +167,7 @@ namespace Map
             lastUpdateTime = startTime;
             progress = 0f;
 
-            // Gerçekçi süre hesaplamasý: start ve destination arasýndaki x/z bazlý mesafe * çarpan
+            // GerÃ§ekÃ§i sÃ¼re hesaplamasÄ±: start ve destination arasÄ±ndaki x/z bazlÄ± mesafe * Ã§arpan
             float distance = Vector3.Distance(startWaypoint.position, destinationWaypoint.position);
             journeyDuration = distance * distanceTimeMultiplier;
             Debug.Log($"New target selected. Distance: {distance:F2}, Duration: {journeyDuration:F2} sec");

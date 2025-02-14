@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -21,7 +22,9 @@ public class MapManager : MonoBehaviour
     // Armypanel UI
     [SerializeField] private TMP_Text SoldierName;
     [SerializeField] private Image armyStartLocationImage;
+    [SerializeField] private TMP_Text armyStartLocationText;
     [SerializeField] private Image armyDestinationLocationImage;
+    [SerializeField] private TMP_Text armyDestinationLocationText;
     [SerializeField] private Slider progressSlider;
     [SerializeField] private TMP_Text progressText;
 
@@ -44,28 +47,44 @@ public class MapManager : MonoBehaviour
     public void ShowPanel(PanelType panelToShow)
     {
         foreach (var panel in panels)
+        {
             panel.Value.SetActive(panel.Key == panelToShow);
+            if (panel.Key==panelToShow)
+            {
+                MapPanel.Instance.ToggleTab();
+            }
+        }
+ 
     }
 
     #region Army Panel Codes
-    public void UpdateArmyPanelFeudatories(FeudatoryDataSC startFeudatory, FeudatoryDataSC destinationFeudatory, float progress,ArmyData data)
+    public void UpdateArmyPanelFeudatories(FeudatoryDataSC startFeudatory, FeudatoryDataSC destinationFeudatory, float progress, float journeyDuration, ArmyData data)
     {
-        UpdateProgress(progress);
-        SoldierName.text=data.armyName;
+        UpdateProgress(progress, journeyDuration);
+        SoldierName.text = data.armyName;
 
         if (armyStartLocationImage != null)
+        {
             armyStartLocationImage.sprite = startFeudatory.Icon;
+            armyStartLocationText.text = startFeudatory.Name;
+        }
         if (armyDestinationLocationImage != null)
+        {
             armyDestinationLocationImage.sprite = destinationFeudatory.Icon;
+            armyDestinationLocationText.text = destinationFeudatory.Name;
+        }
     }
 
-    public void UpdateProgress(float progress)
+    public void UpdateProgress(float progress, float journeyDuration)
     {
         if (progressSlider != null)
             progressSlider.value = progress;
+        
+        float remainingTime = journeyDuration * (1f - progress);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(remainingTime);
 
         if (progressText != null)
-            progressText.text = $"{(progress * 100f):F1}%";
+            progressText.text = string.Format("{0:D2}:{1:D2}:{2:D2}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
     }
     #endregion
 

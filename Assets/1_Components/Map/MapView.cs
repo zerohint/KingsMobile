@@ -30,7 +30,7 @@ namespace Game.Map
         private void Start()
         {
             DrawEntities(); 
-            //Write();
+            Write();
         }
 
         private void OnEnable()
