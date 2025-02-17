@@ -1490,6 +1490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 246374360}
+  - component: {fileID: 246374361}
   m_Layer: 0
   m_Name: CastlePanel
   m_TagString: Untagged
@@ -1519,6 +1520,19 @@ RectTransform:
   m_AnchoredPosition: {x: 187.27, y: 0}
   m_SizeDelta: {x: 374.55, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &246374361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246374359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a72d04bcf5e42db8abc99faa39803aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castleName: {fileID: 860973953}
 --- !u!1 &249619211
 GameObject:
   m_ObjectHideFlags: 0
@@ -10303,8 +10317,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1211102815}
+  - component: {fileID: 1211102816}
   m_Layer: 0
-  m_Name: SoldierPanel
+  m_Name: ArmyPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10333,6 +10348,25 @@ RectTransform:
   m_AnchoredPosition: {x: 187.27, y: 0}
   m_SizeDelta: {x: 374.55, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1211102816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211102814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4888dbbc563943ad9363fda721b7cbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soldierName: {fileID: 1000568062}
+  startLocationImage: {fileID: 853041413}
+  startLocationText: {fileID: 486787853}
+  destinationLocationImage: {fileID: 638966606}
+  destinationLocationText: {fileID: 1438437038}
+  progressSlider: {fileID: 2315171844197071600}
+  progressText: {fileID: 323185714}
 --- !u!1 &1219213366
 GameObject:
   m_ObjectHideFlags: 0
@@ -16831,16 +16865,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ebb85a22189af4da60f34e0d00cae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castlePanel: {fileID: 246374359}
-  armyPanel: {fileID: 1211102814}
-  SoldierName: {fileID: 1000568062}
-  armyStartLocationImage: {fileID: 853041413}
-  armyStartLocationText: {fileID: 486787853}
-  armyDestinationLocationImage: {fileID: 638966606}
-  armyDestinationLocationText: {fileID: 1438437038}
-  progressSlider: {fileID: 2315171844197071600}
-  progressText: {fileID: 323185714}
-  CastleName: {fileID: 860973953}
 --- !u!114 &2030290700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29441,7 +29465,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11246826, y: 8121548.5}
+  m_AnchoredPosition: {x: -11626530, y: 8397732}
   m_SizeDelta: {x: 0, y: 1050.1514}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2619862701007762572
@@ -42550,7 +42574,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402316813419365002}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}

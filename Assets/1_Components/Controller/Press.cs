@@ -16,8 +16,7 @@ public partial class CameraController
             if (!enabled) return;
             if (!ShouldProcessInput()) return;
 
-
-            if (Map.FindAction("Press").WasPressedThisFrame())
+            if (Map.FindAction("Press").WasReleasedThisFrame())
             {
                 Vector2 pressPosition = Map.FindAction("PressPosition").ReadValue<Vector2>();
 
@@ -28,15 +27,13 @@ public partial class CameraController
                     {
                         pressObject.OnPress();
                     }
-
                 }
             }
         }
     }
 }
 
-
 public interface IPressObject
 {
-    public void OnPress();
+    void OnPress();
 }

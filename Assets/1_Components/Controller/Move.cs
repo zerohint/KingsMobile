@@ -8,6 +8,9 @@ public partial class CameraController
         [SerializeField] private float moveSpeed = 40f;
         [SerializeField] private float dragSpeed = 10f;
 
+        [SerializeField] private Vector2 xLimits = new Vector2(-300f, 300f);
+        [SerializeField] private Vector2 zLimits = new Vector2(-150f, 150f);
+
         private Vector2 lastMousePosition;
         private bool isDragging = false;
 
@@ -20,27 +23,31 @@ public partial class CameraController
             moveAction = Map.FindAction("Move");
             mousePositionAction = Map.FindAction("PressPosition");
             leftClickAction = Map.FindAction("Press");
+
+            leftClickAction.started += OnLeftClickStarted;
+            leftClickAction.canceled += OnLeftClickCanceled;
+        }
+
+        private void OnLeftClickStarted(InputAction.CallbackContext context)
+        {
+            lastMousePosition = mousePositionAction.ReadValue<Vector2>();
+            isDragging = true;
+        }
+
+        private void OnLeftClickCanceled(InputAction.CallbackContext context)
+        {
+            isDragging = false;
         }
 
         internal override void Handle()
         {
             if (!enabled) return;
-            if (!ShouldProcessInput()) return; // UI üzerindeyse veya ekran dýþýndaysa input iþlenmez
+            if (!ShouldProcessInput()) return;
 
             Vector2 moveInput = moveAction.ReadValue<Vector2>();
             Vector3 moveDirection = (CamT.right * moveInput.x) + (CamT.forward * moveInput.y);
             moveDirection.y = 0f;
             CamT.position += moveSpeed * Time.deltaTime * moveDirection;
-
-            if (leftClickAction.WasPressedThisFrame())
-            {
-                lastMousePosition = mousePositionAction.ReadValue<Vector2>();
-                isDragging = true;
-            }
-            else if (leftClickAction.WasReleasedThisFrame())
-            {
-                isDragging = false;
-            }
 
             if (isDragging)
             {
@@ -53,6 +60,11 @@ public partial class CameraController
                 CamT.position += worldDrag;
                 lastMousePosition = currentMousePosition;
             }
+
+            Vector3 clampedPosition = CamT.position;
+            clampedPosition.x = Mathf.Clamp(clampedPosition.x, xLimits.x, xLimits.y);
+            clampedPosition.z = Mathf.Clamp(clampedPosition.z, zLimits.x, zLimits.y);
+            CamT.position = clampedPosition;
         }
     }
 }
