@@ -3,16 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayersManager", menuName = "Game/Managers/Players Manager")]
 public class PlayersManager : SingletonSC<PlayersManager>
 {
-    public PlayerPublicData playerPublicData;
+    public bool IsDataLoaded { get; private set; }
+    public PlayerData playerData;
 
-    // other players
-
-    
-
-    public override void Initialize()
+    public void LoadData()
     {
-        base.Initialize();
-
-        playerPublicData = PlayerPublicData.LoadLocal();
+        //playerData = Firebase
+        //IsDataLoaded = true;
     }
 }

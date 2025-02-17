@@ -1,9 +1,22 @@
+using UnityEngine;
+
 public class PlayerData
 {
     public string playerName;
     public int playerLevel = 0;
+
     public int gold = 0;
-    public int food = 0;
+    public int food = 0; // tahil
+    public Village.Data villageData;
+    public int feudetoryId = -1;
+    public int avatarId = -1;
+
+    /// <summary>
+    /// Is landing scene done
+    /// </summary>
+    public bool IsLanded => PlayerPrefs.GetString(PlayerPublicDataKey, "{}") != "{}";
+
+    private const string PlayerPublicDataKey = "PlayerPublicData";
 
     public PlayerData() { }
 

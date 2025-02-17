@@ -19,13 +19,13 @@ public class Landing : MonoBehaviour
 
     private void OnLoginDone()
     {
-        PlayersManager.Instance.playerPublicData.feudetoryId = (feudatorySelection as FeudatorySelection).feudatories[feudatorySelection.Value].Id;
-        PlayersManager.Instance.playerPublicData.avatarId = (avatarSelection as AvatarSelection).avatars[avatarSelection.Value].Id;
-        //PlayersManager.Instance.playerPublicData.emblemId = emblemSelection.Value;
+        PlayersManager.Instance.playerData.feudetoryId = (feudatorySelection as FeudatorySelection).feudatories[feudatorySelection.Value].Id;
+        PlayersManager.Instance.playerData.avatarId = (avatarSelection as AvatarSelection).avatars[avatarSelection.Value].Id;
+        //PlayersManager.Instance.playerData.emblemId = emblemSelection.Value;
 
         LoginManager.Instance.SetUserData(new LoginManager.Data(userName.text));
 
-        PlayerPublicData.SaveLocal(PlayersManager.Instance.playerPublicData);
+        //PlayerData.SaveLocal(PlayersManager.Instance.playerData);
 
         ScenesManager.Instance.LoadScene(ScenesManager.Scene.Game);
     }

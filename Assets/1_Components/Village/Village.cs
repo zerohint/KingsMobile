@@ -6,7 +6,12 @@ using Game.Village;
 public class Village : MonoBehaviour
 {
     [SerializeField] private BuildingBase[] buildings;
-
+    
+    //private IEnumerator Start()
+    //{
+    //    yield return new WaitUntil(() => PlayersManager.Instance.IsDataLoaded);
+    //    SetData(PlayersManager.Instance.playerData.villageData);
+    //}
 
     public string GetData()
     {
@@ -28,7 +33,7 @@ public class Village : MonoBehaviour
     }
 
     [Serializable]
-    private struct Data
+    public struct Data
     {
         public string[] buildingsData;
     }
