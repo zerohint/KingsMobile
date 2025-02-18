@@ -9,7 +9,8 @@ namespace Game.Village
         public override BuildingType BuildingType => BuildingType.Arena;
         public override void OnPress()
         {
-            ShowPanel();
+            //ViewManager.Instance.ChangeView(ViewManager.View.Champion);
+            ViewManager.Instance.SetActive(ViewManager.View.Champion);
         }
 
         public override string GetData()

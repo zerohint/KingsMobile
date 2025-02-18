@@ -28,6 +28,19 @@ public class ViewManager : MonoBehaviour
         CurrentView = view;
         OnViewChanged?.Invoke(view);
     }
+    public void SetActive(View view)
+    {
+        foreach(var viewData in views)
+        {
+            if (viewData.view==view)
+            {
+                viewData.SetActive(true);
+                CurrentView=view;
+                OnViewChanged?.Invoke(view);
+                return;
+            }
+        }
+    }
 
 
     public enum View
