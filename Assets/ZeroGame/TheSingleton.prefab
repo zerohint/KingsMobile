@@ -50,6 +50,9 @@ MonoBehaviour:
   managers:
   - {fileID: 11400000, guid: e3346a304bfee2248a4e41225512326b, type: 2}
   - {fileID: 11400000, guid: ab6da2bb9209e554c9d4aa69a9141ec0, type: 2}
+  - {fileID: 11400000, guid: 75d1a5e65abd53643ab0d31566c91f2e, type: 2}
+  - {fileID: 11400000, guid: f561581259d37ba4d8655d2dd610e546, type: 2}
+  - {fileID: 11400000, guid: 0099be17f7bc122459d87ab3e30f7377, type: 2}
   singletonUI:
   - {fileID: 1413476166755943479, guid: 7b9a1aca1f773aa438f2fbc3f3999f32, type: 3}
   gameObjects: []

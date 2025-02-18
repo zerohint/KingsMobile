@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -6,29 +7,40 @@ using Game.Village;
 public class Village : MonoBehaviour
 {
     [SerializeField] private BuildingBase[] buildings;
-    
-    //private IEnumerator Start()
-    //{
-    //    yield return new WaitUntil(() => PlayersManager.Instance.IsDataLoaded);
-    //    SetData(PlayersManager.Instance.playerData.villageData);
-    //}
 
-    public string GetData()
+    private IEnumerator Start()
     {
-        List<string> datas = new List<string>();
-        foreach (var building in buildings)
+        yield return new WaitUntil(() => PlayersManager.Instance.IsDataLoaded);
+
+        if (PlayersManager.Instance.playerData.villageData.buildingsData != null &&
+            PlayersManager.Instance.playerData.villageData.buildingsData.Length > 0)
         {
-            datas.Add(building.GetData());
+            SetData(PlayersManager.Instance.playerData.villageData);
         }
-        return JsonUtility.ToJson(new Data { buildingsData = datas.ToArray() });
+        else
+        {
+            Debug.Log("Village verisi bulunamadý, varsayýlan ayarlar kullanýlacak.");
+        }
     }
 
-    public void SetData(string data)
+
+    public Data GetData()
     {
-        Data loadedData = JsonUtility.FromJson<Data>(data);
-        for (int i = 0; i < buildings.Length && i < loadedData.buildingsData.Length; i++)
+        Data data = new Data();
+        data.buildingsData = new string[buildings.Length];
+        for (int i = 0; i < buildings.Length; i++)
         {
-            buildings[i].SetData(loadedData.buildingsData[i]);
+            data.buildingsData[i] = buildings[i].GetData();
+        }
+        return data;
+    }
+
+
+    public void SetData(Data data)
+    {
+        for (int i = 0; i < buildings.Length && i < data.buildingsData.Length; i++)
+        {
+            buildings[i].SetData(data.buildingsData[i]);
         }
     }
 

@@ -6972,6 +6972,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c7a25e3a376214e8d338c7d18e6b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData:
+    playerName: 
+    playerLevel: 0
+    gold: 0
+    food: 0
+    villageData:
+      buildingsData: []
+    feudetoryId: -1
+    avatarId: -1
 --- !u!4 &863881443
 Transform:
   m_ObjectHideFlags: 0
@@ -13439,7 +13448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1602217212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29465,7 +29474,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11626530, y: 8397732}
+  m_AnchoredPosition: {x: -11681477, y: 8439640}
   m_SizeDelta: {x: 0, y: 1050.1514}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2619862701007762572
@@ -40810,7 +40819,7 @@ PrefabInstance:
     - target: {fileID: 7581817289125274126, guid: 84c7505fcf00234409d95ff403d450da,
         type: 3}
       propertyPath: m_Name
-      value: Area
+      value: Arena
       objectReference: {fileID: 0}
     - target: {fileID: 7581817289125274126, guid: 84c7505fcf00234409d95ff403d450da,
         type: 3}

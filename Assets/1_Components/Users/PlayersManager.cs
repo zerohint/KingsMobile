@@ -8,7 +8,15 @@ public class PlayersManager : SingletonSC<PlayersManager>
 
     public void LoadData()
     {
-        //playerData = Firebase
-        //IsDataLoaded = true;
+        string dataJson = PlayerPrefs.GetString("PlayerPublicData", "{}");
+        if (dataJson != "{}")
+        {
+            playerData = JsonUtility.FromJson<PlayerData>(dataJson);
+            IsDataLoaded = true;
+        }
+        else
+        {
+            playerData = new PlayerData();
+        }
     }
 }

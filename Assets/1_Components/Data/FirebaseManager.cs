@@ -4,26 +4,14 @@ using Firebase.Firestore;
 using Firebase.Extensions;
 using System;
 using System.Collections.Generic;
+using Game.Village;
 
-public class FirebaseManager : MonoBehaviour
+[CreateAssetMenu(fileName = "FirebaseManager", menuName = "Game/Managers/Firebase Manager")]
+public class FirebaseManager : SingletonSC<FirebaseManager>
 {
-    public static FirebaseManager Instance;
     public FirebaseFirestore firestore;
 
     public event Action OnFirebaseInitialized;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {
@@ -37,12 +25,12 @@ public class FirebaseManager : MonoBehaviour
             if (task.Result == DependencyStatus.Available)
             {
                 firestore = FirebaseFirestore.DefaultInstance;
-                Debug.Log("Firebase Firestore has been started successfully.");
+                Debug.Log("Firebase Firestore başarıyla başlatıldı.");
                 OnFirebaseInitialized?.Invoke();
             }
             else
             {
-                Debug.LogError("Firebase dependency error:" + task.Result);
+                Debug.LogError("Firebase bağımlılık hatası: " + task.Result);
             }
         });
     }
@@ -51,7 +39,7 @@ public class FirebaseManager : MonoBehaviour
     {
         if (firestore == null)
         {
-            Debug.LogError("Firestore is not initialized yet!");
+            Debug.LogError("Firestore henüz başlatılmadı!");
             return;
         }
 
@@ -60,7 +48,8 @@ public class FirebaseManager : MonoBehaviour
             { FKeys.PLAYER_NAME, playerData.playerName },
             { FKeys.PLAYER_LEVEL, playerData.playerLevel },
             { FKeys.GOLD, playerData.gold },
-            { FKeys.FOOD, playerData.food }
+            { FKeys.FOOD, playerData.food },
+            { FKeys.VILLAGE_DATA, playerData.villageData.buildingsData }
         };
 
         firestore.Collection(FKeys.PLAYER_COLLECTION)
@@ -70,12 +59,12 @@ public class FirebaseManager : MonoBehaviour
             {
                 if (task.IsCompleted)
                 {
-                    Debug.Log("Player data saved to Firestore.");
+                    Debug.Log("Player data Firestore'a kaydedildi.");
                     onComplete?.Invoke();
                 }
                 else
                 {
-                    Debug.LogError("Data saving error: " + task.Exception);
+                    Debug.LogError("Veri kaydetme hatası: " + task.Exception);
                 }
             });
     }
@@ -84,10 +73,10 @@ public class FirebaseManager : MonoBehaviour
     {
         if (firestore == null)
         {
-            Debug.LogError("Firestore is not initialized yet!");
+            Debug.LogError("Firestore henüz başlatılmadı!");
             return;
         }
-        if (playerName == null)
+        if (string.IsNullOrEmpty(playerName))
         {
             playerName = "Player#" + UnityEngine.Random.Range(111, 999);
         }
@@ -106,24 +95,36 @@ public class FirebaseManager : MonoBehaviour
                         ret.playerLevel = snapshot.GetValue<int>(FKeys.PLAYER_LEVEL);
                         ret.gold = snapshot.GetValue<int>(FKeys.GOLD);
                         ret.food = snapshot.GetValue<int>(FKeys.FOOD);
-                        Debug.Log("Player data loaded.");
+
+                        if (snapshot.ContainsField(FKeys.VILLAGE_DATA))
+                        {
+                            ret.villageData = new Village.Data
+                            {
+                                buildingsData = snapshot.GetValue<string[]>(FKeys.VILLAGE_DATA)
+                            };
+                        }
+                        else
+                        {
+                            ret.villageData = new Village.Data();
+                        }
+
+                        Debug.Log("Player data yüklendi.");
                         onDataLoaded?.Invoke(ret);
                     }
                     else
                     {
-                        Debug.LogWarning("No data found in the database, new data is being created.");
-
+                        Debug.LogWarning("Veritabanında veri bulunamadı, yeni veri oluşturuluyor.");
                         PlayerData newData = new PlayerData(playerName);
                         SavePlayerData(newData, () =>
                         {
-                            Debug.Log("New player data has been created and saved.");
+                            Debug.Log("Yeni player data oluşturuldu ve kaydedildi.");
                             onDataLoaded?.Invoke(newData);
                         });
                     }
                 }
                 else
                 {
-                    Debug.LogError("Task error: " + task.Exception);
+                    Debug.LogError("Görev hatası: " + task.Exception);
                 }
             });
     }
@@ -131,15 +132,10 @@ public class FirebaseManager : MonoBehaviour
     public static class FKeys
     {
         public const string PLAYER_COLLECTION = "PlayerData";
-
         public const string PLAYER_NAME = "playerName";
-
         public const string PLAYER_LEVEL = "playerLevel";
-
         public const string GOLD = "gold";
-
         public const string FOOD = "food";
-
-
+        public const string VILLAGE_DATA = "villageData";
     }
 }

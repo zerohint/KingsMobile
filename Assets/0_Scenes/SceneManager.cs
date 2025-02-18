@@ -24,8 +24,8 @@ public sealed class ScenesManager : SingletonSC<ScenesManager>
 
     public enum Scene
     {
-        Intro = 0,
-        Game = 1,
+        Intro = 1,
+        Game = 3,
         Landing = 2
     }
 }
