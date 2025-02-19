@@ -22,10 +22,11 @@ namespace Game.Village
 
         [SerializeField] private Button upgradeButton;
         [SerializeField] private TMP_Text buildingNameText;
+        [SerializeField] private TMP_Text upgradeInfoText;
         [SerializeField] private GameObject panelGO;
         [SerializeField] private Canvas canvas;
 
-        [Header("Animasyon Settings")]
+        [Header("Animation Settings")]
         public float moveDuration = 0.5f;
         public float rotateDuration = 0.3f;
 
@@ -87,17 +88,19 @@ namespace Game.Village
         {
             currentBuilding = building;
             buildingNameText.text = building.name;
+            upgradeInfoText.text = building.GetUpgradeInfo();
         }
 
         public void UpgradeBuilding()
         {
-            BuildingBase building = GetCurrentBuilding();
+            BuildingBase building = currentBuilding;
             if (building != null)
             {
                 PopupManager.Instance.ShowPopup(
                     "Are you sure you want to upgrade this building?",
                     () => {
                         building.Upgrade();
+                        UpdatePanel(building);
                         Debug.Log("The building has been upgraded!");
                     },
                     () => {
@@ -108,8 +111,11 @@ namespace Game.Village
             else
             {
                 Debug.LogWarning("No active buildings found!");
+                upgradeButton.interactable = false;
+                
             }
         }
+
         private void Start()
         {
             isOpen = true;

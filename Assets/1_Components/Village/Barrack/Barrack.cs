@@ -7,7 +7,9 @@ namespace Game.Village
     public class Barrack : BuildingBase
     {
         public override BuildingType BuildingType => BuildingType.Barrack;
-
+        [SerializeField]
+        private BuildingUpgradeData upgradeData;
+        public BuildingUpgradeData UpgradeData => upgradeData;
         public List<SoldierInfo> AvailableSoldiers { get; private set; }
 
         private void Start()
@@ -38,6 +40,21 @@ namespace Game.Village
         public override void OnPress()
         {
             ShowPanel();
+        }
+
+        public override string GetUpgradeInfo()
+        {
+            int nextStageLevel = currentUpgradeStage + 1;
+            UpgradeStage nextStage = upgradeData.upgradeStages.Find(s => s.stageLevel == nextStageLevel);
+            if (nextStage != null)
+            {
+                return $"Level {nextStage.stageLevel} Upgrade:\n" +
+                       $"Required building level: {nextStage.requiredBuildingLevel}\n" +
+                       $"Gem: {nextStage.gemCost}\n" +
+                       $"Grain: {nextStage.grainCost}\n" +
+                       $"Coin: {nextStage.coinCost}";
+            }
+            return "No further upgrades available.";
         }
 
         [Serializable]

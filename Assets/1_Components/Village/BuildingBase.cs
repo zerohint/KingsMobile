@@ -30,6 +30,10 @@ namespace Game.Village
             Debug.Log($"{name} {currentUpgradeStage}. upgraded.");
             // Common upgrade operations (e.g. resource consumption, stat increase, etc.) can be added here.
         }
+        public virtual string GetUpgradeInfo()
+        {
+            return string.Empty;
+        }
     }
 
     public enum BuildingType
