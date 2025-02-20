@@ -6981,15 +6981,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c7a25e3a376214e8d338c7d18e6b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData:
-    playerName: 
-    playerLevel: 0
-    gold: 0
-    food: 0
-    villageData:
-      buildingsData: []
-    feudetoryId: -1
-    avatarId: -1
 --- !u!4 &863881443
 Transform:
   m_ObjectHideFlags: 0
@@ -17281,7 +17272,7 @@ MonoBehaviour:
   moveDuration: 0.5
   rotateDuration: 0.3
   panelPrefabs:
-  - {fileID: 575174793603179079, guid: 54d1989089f3e514c8ac384699a7596d, type: 3}
+  - {fileID: 5089153235026704532, guid: 54d1989089f3e514c8ac384699a7596d, type: 3}
   - {fileID: 2766383764472524312, guid: e416e78b75a037442bcd233c0151266e, type: 3}
   - {fileID: 5055182391173494041, guid: 82a2f3352bb70004885ba4f69477a897, type: 3}
 --- !u!224 &2048076722
@@ -29720,7 +29711,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -353473, y: 186910.86}
+  m_AnchoredPosition: {x: -1459849.2, y: 759159.4}
   m_SizeDelta: {x: 0, y: 1050.1514}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2619862701007762572
@@ -42327,6 +42318,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
         type: 3}
+      propertyPath: yayaPrefab
+      value: 
+      objectReference: {fileID: 1215398779529143031, guid: a962881e09fb0784aa6f3b8b9f4a2435,
+        type: 3}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: f4a301f6aee45ee47af8405a1a5adb33,
@@ -42336,6 +42333,12 @@ PrefabInstance:
       propertyPath: barrackPanel
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: suvariPrefab
+      value: 
+      objectReference: {fileID: 1215398779529143031, guid: 52f9aae308abd6f4b9c339ab6924ebe9,
+        type: 3}
     - target: {fileID: 1840526396273652603, guid: 22d3abdc590079142a891614d00ce887,
         type: 3}
       propertyPath: m_StaticEditorFlags

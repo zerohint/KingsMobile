@@ -3,7 +3,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public PlayerData playerData = new PlayerData();
 
     private void Awake()
     {
@@ -32,15 +31,21 @@ public class GameManager : MonoBehaviour
 
     private void OnFirebaseReady()
     {
-        FirebaseManager.Instance.LoadPlayerData(playerData.playerName, (data) =>
+        // PlayersManager'da daha önce LoadData() çağrıldıysa, playerData dolu olacaktır.
+        var pm = PlayersManager.Instance;
+        FirebaseManager.Instance.LoadPlayerData(pm.playerData.playerName, (data) =>
         {
-            playerData = data;
+            // Firebase'den gelen veri PlayersManager.playerData'yı güncelliyor.
+            pm.playerData = data;
+            Debug.Log("GameManager: Player data loaded from Firebase.");
         });
     }
 
     public void SaveGame()
     {
-        FirebaseManager.Instance.SavePlayerData(playerData);
+        FirebaseManager.Instance.SavePlayerData(PlayersManager.Instance.playerData, () =>
+        {
+            Debug.Log("GameManager: Player data saved to Firebase.");
+        });
     }
 }
-
