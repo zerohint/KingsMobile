@@ -11,15 +11,22 @@ namespace Game.Village
         private BuildingUpgradeData upgradeData;
         public BuildingUpgradeData UpgradeData => upgradeData;
         public List<SoldierInfo> AvailableSoldiers { get; private set; }
+        [SerializeField] private List<SoldierIconData> soldierIcons;
 
         private void Start()
         {
             AvailableSoldiers = new List<SoldierInfo>
             {
-                new SoldierInfo(SoldierType.Suvari, 35),
-                new SoldierInfo(SoldierType.Yaya, 35)
+                new SoldierInfo(SoldierType.Suvari, 35, GetSoldierIcon(SoldierType.Suvari)),
+                new SoldierInfo(SoldierType.Yaya, 35, GetSoldierIcon(SoldierType.Yaya))
             };
         }
+        private Sprite GetSoldierIcon(SoldierType type)
+        {
+            SoldierIconData data = soldierIcons.Find(s => s.type == type);
+            return data.icon != null ? data.icon : default;
+        }
+
 
         public override string GetData()
         {
@@ -40,6 +47,12 @@ namespace Game.Village
         public override void OnPress()
         {
             ShowPanel();
+            BarrackPanel barrackPanel = FindObjectOfType<BarrackPanel>();
+            if (barrackPanel != null)
+            {
+                barrackPanel.SetBuilding(this);
+                barrackPanel.SetActive(true);
+            }
         }
 
         public override string GetUpgradeInfo()
@@ -69,12 +82,20 @@ namespace Game.Village
         {
             public SoldierType Type;
             public int Count;
+            public Sprite Icon;
 
-            public SoldierInfo(SoldierType type, int count)
+            public SoldierInfo(SoldierType type, int count, Sprite icon)
             {
                 Type = type;
                 Count = count;
+                Icon = icon;
             }
+        }
+        [Serializable]
+        public struct SoldierIconData
+        {
+            public SoldierType type;
+            public Sprite icon;
         }
     }
 

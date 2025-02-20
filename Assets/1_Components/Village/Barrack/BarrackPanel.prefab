@@ -554,12 +554,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingType: 1
-  soldierEntryPrefab: {fileID: 1215398779529143031, guid: 52f9aae308abd6f4b9c339ab6924ebe9,
+  soldierEntryPrefab: {fileID: 2249349100742280786, guid: 7162ee90361fa294ebaa862a979d0e22,
     type: 3}
   soldierListContainer: {fileID: 1322403402787456042}
-  productionQueueEntryPrefab: {fileID: 5759477840257042766, guid: d312327d130de5a4fb0a873a3726e4c7,
-    type: 3}
   productionQueueContainer: {fileID: 7005122505446646007}
+  productionQueueIconPrefab: {fileID: 7841997539465835453, guid: 4ffac3d1524ecd94baa6cbf622141b31,
+    type: 3}
+  upgradeData: {fileID: 11400000, guid: f4a301f6aee45ee47af8405a1a5adb33, type: 2}
 --- !u!1 &6154833872342077574
 GameObject:
   m_ObjectHideFlags: 0

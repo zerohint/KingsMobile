@@ -29711,7 +29711,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1459849.2, y: 759159.4}
+  m_AnchoredPosition: {x: -3019599.2, y: 1567208.2}
   m_SizeDelta: {x: 0, y: 1050.1514}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2619862701007762572
@@ -42339,6 +42339,45 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1215398779529143031, guid: 52f9aae308abd6f4b9c339ab6924ebe9,
         type: 3}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: soldierIcons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: soldierPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: soldierPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1215398779529143031, guid: 52f9aae308abd6f4b9c339ab6924ebe9,
+        type: 3}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: soldierPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1215398779529143031, guid: a962881e09fb0784aa6f3b8b9f4a2435,
+        type: 3}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: soldierIcons.Array.data[0].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6283a8d990f65f241b79f60d01392305,
+        type: 3}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: soldierIcons.Array.data[1].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 30631f96f4d3af64694c97d59fad6736,
+        type: 3}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: soldierIcons.Array.data[1].type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1840526396273652603, guid: 22d3abdc590079142a891614d00ce887,
         type: 3}
       propertyPath: m_StaticEditorFlags
