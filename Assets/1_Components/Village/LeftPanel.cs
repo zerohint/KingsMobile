@@ -19,10 +19,18 @@ namespace Game.Village
         public Vector2 closedPosition;
         public Transform arrowButton;
         [SerializeField] private Button closeButton;
-
         [SerializeField] private Button upgradeButton;
+
         [SerializeField] private TMP_Text buildingNameText;
-        [SerializeField] private TMP_Text upgradeInfoText;
+        [SerializeField] private TMP_Text upgradeLevelText;
+        [SerializeField] private TMP_Text gemText;
+        [SerializeField] private TMP_Text grainText;
+        [SerializeField] private TMP_Text coinText;
+
+        [SerializeField] private Image gemIcon;
+        [SerializeField] private Image grainIcon;
+        [SerializeField] private Image coinIcon;
+
         [SerializeField] private GameObject panelGO;
         [SerializeField] private Canvas canvas;
 
@@ -88,20 +96,34 @@ namespace Game.Village
         {
             currentBuilding = building;
             buildingNameText.text = building.name;
-            upgradeInfoText.text = building.GetUpgradeInfo();
+
+            if (building is Barrack barrack)
+            {
+                var upgradeStage = barrack.GetNextUpgradeStage();
+                if (upgradeStage != null)
+                {
+                    upgradeLevelText.text = $"Level {upgradeStage.stageLevel}";
+                    gemText.text = upgradeStage.gemCost.ToString();
+                    grainText.text = upgradeStage.grainCost.ToString();
+                    coinText.text = upgradeStage.coinCost.ToString();
+                }
+                else
+                {
+                    upgradeLevelText.text = "Max Level";
+                }
+            }
         }
 
         public void UpgradeBuilding()
         {
-            BuildingBase building = currentBuilding;
-            if (building != null)
+            if (currentBuilding != null)
             {
                 PopupManager.Instance.ShowPopup(
-                    "Are you sure you want to upgrade this building?",
+                    "Upgrade this building?",
                     () => {
-                        building.Upgrade();
-                        UpdatePanel(building);
-                        Debug.Log("The building has been upgraded!");
+                        currentBuilding.Upgrade();
+                        UpdatePanel(currentBuilding);
+                        Debug.Log("Building upgraded!");
                     },
                     () => {
                         Debug.Log("Upgrade canceled.");
@@ -110,9 +132,7 @@ namespace Game.Village
             }
             else
             {
-                Debug.LogWarning("No active buildings found!");
-                upgradeButton.interactable = false;
-                
+                Debug.LogWarning("No active buildings!");
             }
         }
 

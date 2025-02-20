@@ -47,19 +47,10 @@ namespace Game.Village
             }
         }
 
-        public override string GetUpgradeInfo()
+        public UpgradeStage GetNextUpgradeStage()
         {
             int nextStageLevel = currentUpgradeStage + 1;
-            UpgradeStage nextStage = upgradeData.upgradeStages.Find(s => s.stageLevel == nextStageLevel);
-            if (nextStage != null)
-            {
-                return $"Level {nextStage.stageLevel} Upgrade:\n" +
-                       $"Required building level: {nextStage.requiredBuildingLevel}\n" +
-                       $"Gem: {nextStage.gemCost}\n" +
-                       $"Grain: {nextStage.grainCost}\n" +
-                       $"Coin: {nextStage.coinCost}";
-            }
-            return "No further upgrades available.";
+            return upgradeData.upgradeStages.Find(s => s.stageLevel == nextStageLevel);
         }
 
         [Serializable]
