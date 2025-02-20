@@ -11,9 +11,10 @@ namespace Game.Village
         [SerializeField] private GameObject soldierEntryPrefab;
         [SerializeField] private Transform soldierListContainer;
         [SerializeField] private Transform productionQueueContainer;
-        [SerializeField] private GameObject productionQueueIconPrefab; 
+        [SerializeField] private GameObject productionQueueIconPrefab;
 
         private List<GameObject> spawnedSoldierEntries = new List<GameObject>();
+        private Dictionary<GameObject, Coroutine> activeProductions = new Dictionary<GameObject, Coroutine>();
 
         public Barrack CurrentBarrack => Building as Barrack;
 
@@ -47,55 +48,61 @@ namespace Game.Village
 
         private void PopulateSoldierList()
         {
-            if (CurrentBarrack == null || CurrentBarrack.AvailableSoldiers == null)
-            {
-                Debug.LogError("BarrackPanel: CurrentBarrack or AvailableSoldiers null!");
-                return;
-            }
-
             foreach (Transform child in soldierListContainer)
             {
                 Destroy(child.gameObject);
             }
             spawnedSoldierEntries.Clear();
 
-            foreach (var soldier in CurrentBarrack.AvailableSoldiers)
+            foreach (var soldierData in CurrentBarrack.AvailableSoldiers)
             {
                 GameObject entryObj = Instantiate(soldierEntryPrefab, soldierListContainer);
                 SoldierEntryUI entryUI = entryObj.GetComponent<SoldierEntryUI>();
                 if (entryUI != null)
                 {
-                    entryUI.Setup(soldier, () => StartProduction(soldier, entryUI));
+                    entryUI.Setup(soldierData, StartProduction);
                 }
                 spawnedSoldierEntries.Add(entryObj);
             }
         }
 
-        private void StartProduction(Barrack.SoldierInfo soldier, SoldierEntryUI entryUI)
+        private void StartProduction(SoldierData soldier, SoldierEntryUI entryUI)
         {
             GameObject productionIcon = Instantiate(productionQueueIconPrefab, productionQueueContainer);
-
             Image productionQueueImage = productionIcon.GetComponent<Image>();
-            if (productionQueueImage != null && entryUI.GetSoldierIcon() != null)
+            RadialProgress radialProgress = productionIcon.GetComponent<RadialProgress>();
+
+            if (productionQueueImage != null)
             {
                 productionQueueImage.sprite = entryUI.GetSoldierIcon();
             }
 
-            StartCoroutine(ProductionCoroutine(soldier, entryUI, productionIcon));
+            if (radialProgress != null)
+            {
+                Coroutine productionRoutine = StartCoroutine(ProductionCoroutine(soldier, entryUI, productionIcon, radialProgress));
+                activeProductions[productionIcon] = productionRoutine;
+            }
         }
 
-        private IEnumerator ProductionCoroutine(Barrack.SoldierInfo soldier, SoldierEntryUI entryUI, GameObject productionIcon)
+        private IEnumerator ProductionCoroutine(SoldierData soldier, SoldierEntryUI entryUI, GameObject productionIcon, RadialProgress radialProgress)
         {
-            float productionTime = 5f;
-            yield return new WaitForSeconds(productionTime);
+            float timeLeft = soldier.productionTime;
+            while (timeLeft > 0)
+            {
+                timeLeft -= Time.deltaTime;
+                radialProgress.UpdateProgress(1 - (timeLeft / soldier.productionTime), timeLeft);
+                yield return null;
+            }
 
             if (productionIcon != null)
             {
                 Destroy(productionIcon);
+                activeProductions.Remove(productionIcon);
             }
 
-            soldier.Count++;
-            entryUI.UpdateCount(soldier.Count);
+            soldier.initialCount++;
+            entryUI.UpdateCount(soldier.initialCount);
         }
+
     }
 }

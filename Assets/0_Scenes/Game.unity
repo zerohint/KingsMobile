@@ -29711,7 +29711,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3019599.2, y: 1567208.2}
+  m_AnchoredPosition: {x: -3749062.5, y: 1944979.4}
   m_SizeDelta: {x: 0, y: 1050.1514}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2619862701007762572
@@ -42351,6 +42351,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
         type: 3}
+      propertyPath: availableSoldiers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
       propertyPath: soldierPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 1215398779529143031, guid: 52f9aae308abd6f4b9c339ab6924ebe9,
@@ -42361,6 +42366,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1215398779529143031, guid: a962881e09fb0784aa6f3b8b9f4a2435,
         type: 3}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: availableSoldiers.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 166312c16d01bf543b9a251c9d136aec,
+        type: 2}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: availableSoldiers.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 274e7e3e32fe8a84e8674b1fc84f4988,
+        type: 2}
+    - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
+        type: 3}
+      propertyPath: availableSoldiers.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 947692ddfa945b542a4e7c62ef54408f,
+        type: 2}
     - target: {fileID: 1483354667280274727, guid: 22d3abdc590079142a891614d00ce887,
         type: 3}
       propertyPath: soldierIcons.Array.data[0].icon

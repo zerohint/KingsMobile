@@ -7,32 +7,25 @@ namespace Game.Village
     public class Barrack : BuildingBase
     {
         public override BuildingType BuildingType => BuildingType.Barrack;
-        [SerializeField]
-        private BuildingUpgradeData upgradeData;
+
+        [SerializeField] private BuildingUpgradeData upgradeData;
         public BuildingUpgradeData UpgradeData => upgradeData;
-        public List<SoldierInfo> AvailableSoldiers { get; private set; }
-        [SerializeField] private List<SoldierIconData> soldierIcons;
+
+        [SerializeField] private List<SoldierData> availableSoldiers;
+        public List<SoldierData> AvailableSoldiers => availableSoldiers;
 
         private void Start()
         {
-            AvailableSoldiers = new List<SoldierInfo>
+            if (availableSoldiers == null || availableSoldiers.Count == 0)
             {
-                new SoldierInfo(SoldierType.Suvari, 35, GetSoldierIcon(SoldierType.Suvari)),
-                new SoldierInfo(SoldierType.Yaya, 35, GetSoldierIcon(SoldierType.Yaya))
-            };
+                availableSoldiers = new List<SoldierData>(Resources.LoadAll<SoldierData>("Soldiers"));
+            }
         }
-        private Sprite GetSoldierIcon(SoldierType type)
-        {
-            SoldierIconData data = soldierIcons.Find(s => s.type == type);
-            return data.icon != null ? data.icon : default;
-        }
-
 
         public override string GetData()
         {
             return JsonUtility.ToJson(new Data()
             {
-                AvailableSoldiers = AvailableSoldiers,
                 currentUpgradeStage = currentUpgradeStage
             });
         }
@@ -40,7 +33,6 @@ namespace Game.Village
         public override void SetData(string dataString)
         {
             Data data = JsonUtility.FromJson<Data>(dataString);
-            AvailableSoldiers = data.AvailableSoldiers;
             currentUpgradeStage = data.currentUpgradeStage;
         }
 
@@ -73,35 +65,7 @@ namespace Game.Village
         [Serializable]
         private struct Data
         {
-            public List<SoldierInfo> AvailableSoldiers;
             public int currentUpgradeStage;
         }
-
-        [Serializable]
-        public class SoldierInfo
-        {
-            public SoldierType Type;
-            public int Count;
-            public Sprite Icon;
-
-            public SoldierInfo(SoldierType type, int count, Sprite icon)
-            {
-                Type = type;
-                Count = count;
-                Icon = icon;
-            }
-        }
-        [Serializable]
-        public struct SoldierIconData
-        {
-            public SoldierType type;
-            public Sprite icon;
-        }
-    }
-
-    public enum SoldierType
-    {
-        Suvari,
-        Yaya
     }
 }

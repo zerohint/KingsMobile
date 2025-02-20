@@ -558,9 +558,8 @@ MonoBehaviour:
     type: 3}
   soldierListContainer: {fileID: 1322403402787456042}
   productionQueueContainer: {fileID: 7005122505446646007}
-  productionQueueIconPrefab: {fileID: 7841997539465835453, guid: 4ffac3d1524ecd94baa6cbf622141b31,
+  productionQueueIconPrefab: {fileID: 3033000755516498306, guid: 464758b88e7d54744828414ccf19412f,
     type: 3}
-  upgradeData: {fileID: 11400000, guid: f4a301f6aee45ee47af8405a1a5adb33, type: 2}
 --- !u!1 &6154833872342077574
 GameObject:
   m_ObjectHideFlags: 0
