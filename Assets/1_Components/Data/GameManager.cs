@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     {
         if (FirebaseManager.Instance != null)
         {
-            FirebaseManager.Instance.OnFirebaseInitialized += OnFirebaseReady;
+            //FirebaseManager.Instance.OnFirebaseInitialized += OnFirebaseReady;
         }
         else
         {

@@ -7,8 +7,9 @@ public class PlayerData
 {
     public string playerName;
     public int playerLevel = 0;
-    public int gold = 0;
-    public int food = 0;
+    public int coin = 0;
+    public int gem = 0;
+    public int grain = 0;
     public Village.Data villageData;
     public int feudetoryId = -1;
     public int avatarId = -1;
@@ -25,8 +26,9 @@ public class PlayerData
     {
         this.playerName = playerName;
         playerLevel = 1;
-        gold = 1000;
-        food = 500;
+        coin = 1000;
+        gem = 0;
+        grain = 500;
         villageData = new Village.Data();
     }
 }

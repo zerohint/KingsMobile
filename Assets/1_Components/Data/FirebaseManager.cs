@@ -44,13 +44,16 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
         }
 
         Dictionary<string, object> data = new Dictionary<string, object>
-        {
-            { FKeys.PLAYER_NAME, playerData.playerName },
-            { FKeys.PLAYER_LEVEL, playerData.playerLevel },
-            { FKeys.GOLD, playerData.gold },
-            { FKeys.FOOD, playerData.food },
-            { FKeys.VILLAGE_DATA, playerData.villageData.buildingsData }
-        };
+    {
+        { FKeys.PLAYER_NAME, playerData.playerName },
+        { FKeys.PLAYER_LEVEL, playerData.playerLevel },
+        { FKeys.COIN, playerData.coin },
+        { FKeys.GEM, playerData.gem },
+        { FKeys.GRAIN, playerData.grain },
+        { FKeys.VILLAGE_DATA, playerData.villageData.buildingsData },
+        { FKeys.AVATAR_ID, playerData.avatarId },
+        { FKeys.FEUDETORY_ID, playerData.feudetoryId }
+    };
 
         firestore.Collection(FKeys.PLAYER_COLLECTION)
             .Document(playerData.playerName)
@@ -68,6 +71,7 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
                 }
             });
     }
+
 
     public void LoadPlayerData(string playerName, Action<PlayerData> onDataLoaded)
     {
@@ -93,8 +97,9 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
                         PlayerData ret = new PlayerData();
                         ret.playerName = snapshot.GetValue<string>(FKeys.PLAYER_NAME);
                         ret.playerLevel = snapshot.GetValue<int>(FKeys.PLAYER_LEVEL);
-                        ret.gold = snapshot.GetValue<int>(FKeys.GOLD);
-                        ret.food = snapshot.GetValue<int>(FKeys.FOOD);
+                        ret.coin = snapshot.GetValue<int>(FKeys.COIN);
+                        ret.gem = snapshot.GetValue<int>(FKeys.GEM);
+                        ret.grain = snapshot.GetValue<int>(FKeys.GRAIN);
 
                         if (snapshot.ContainsField(FKeys.VILLAGE_DATA))
                         {
@@ -107,6 +112,11 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
                         {
                             ret.villageData = new Village.Data();
                         }
+
+                        if (snapshot.ContainsField(FKeys.AVATAR_ID))
+                            ret.avatarId = snapshot.GetValue<int>(FKeys.AVATAR_ID);
+                        if (snapshot.ContainsField(FKeys.FEUDETORY_ID))
+                            ret.feudetoryId = snapshot.GetValue<int>(FKeys.FEUDETORY_ID);
 
                         Debug.Log("Player data yüklendi.");
                         onDataLoaded?.Invoke(ret);
@@ -128,6 +138,7 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
                 }
             });
     }
+
 
     public void SaveProductionOrder(ProductionOrder order, Action onComplete = null)
     {
@@ -152,7 +163,6 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
                 }
             });
     }
-
 
     public void RemoveProductionOrder(string orderId)
     {
@@ -197,8 +207,12 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
         public const string PLAYER_COLLECTION = "PlayerData";
         public const string PLAYER_NAME = "playerName";
         public const string PLAYER_LEVEL = "playerLevel";
-        public const string GOLD = "gold";
-        public const string FOOD = "food";
+        public const string COIN = "coin";
+        public const string GEM = "gem";
+        public const string GRAIN = "grain";
         public const string VILLAGE_DATA = "villageData";
+        public const string AVATAR_ID = "avatarId";
+        public const string FEUDETORY_ID = "feudetoryId";
     }
+
 }

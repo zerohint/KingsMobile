@@ -97,21 +97,29 @@ namespace Game.Village
             currentBuilding = building;
             buildingNameText.text = building.name;
 
-            if (building is Barrack barrack)
+            var upgradeStage = building.GetNextUpgradeStage();
+            if (upgradeStage != null)
             {
-                var upgradeStage = barrack.GetNextUpgradeStage();
-                if (upgradeStage != null)
-                {
-                    upgradeLevelText.text = $"Level {upgradeStage.stageLevel}";
-                    gemText.text = upgradeStage.gemCost.ToString();
-                    grainText.text = upgradeStage.grainCost.ToString();
-                    coinText.text = upgradeStage.coinCost.ToString();
-                }
-                else
-                {
-                    upgradeLevelText.text = "Max Level";
-                }
+                upgradeLevelText.text = $"Level {upgradeStage.stageLevel}";
+                gemText.text = upgradeStage.gemCost.ToString();
+                grainText.text = upgradeStage.grainCost.ToString();
+                coinText.text = upgradeStage.coinCost.ToString();
+
+                upgradeButton.interactable = HasSufficientResources(upgradeStage);
             }
+            else
+            {
+                upgradeLevelText.text = "Max Level";
+                upgradeButton.interactable = false;
+            }
+        }
+
+        private bool HasSufficientResources(UpgradeStage upgradeStage)
+        {
+            var playerData = PlayersManager.Instance.playerData;
+            return playerData.coin >= upgradeStage.coinCost &&
+                   playerData.gem >= upgradeStage.gemCost &&
+                   playerData.grain >= upgradeStage.grainCost;
         }
 
         public void UpgradeBuilding()
@@ -120,19 +128,42 @@ namespace Game.Village
             {
                 PopupManager.Instance.ShowPopup(
                     "Upgrade this building?",
-                    () => {
-                        currentBuilding.Upgrade();
+                    () =>
+                    {
+                        var upgradeStage = currentBuilding.GetNextUpgradeStage();
+                        if (upgradeStage != null && HasSufficientResources(upgradeStage))
+                        {
+                            var playerData = PlayersManager.Instance.playerData;
+                            playerData.coin -= upgradeStage.coinCost;
+                            playerData.gem -= upgradeStage.gemCost;
+                            playerData.grain -= upgradeStage.grainCost;
+
+                            FirebaseManager.Instance.SavePlayerData(playerData, () =>
+                            {
+                                Debug.Log("Resources deducted and saved to Firebase.");
+                                PlayerUIManager uiManager = FindObjectOfType<PlayerUIManager>();
+                                if (uiManager != null)
+                                    uiManager.UpdateUI();
+                            });
+
+                            currentBuilding.Upgrade();
+                            Debug.Log("Building upgraded!");
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Not enough resources to upgrade the building.");
+                        }
                         UpdatePanel(currentBuilding);
-                        Debug.Log("Building upgraded!");
                     },
-                    () => {
+                    () =>
+                    {
                         Debug.Log("Upgrade canceled.");
                     }
                 );
             }
             else
             {
-                Debug.LogWarning("No active buildings!");
+                Debug.LogWarning("No active building selected!");
             }
         }
 

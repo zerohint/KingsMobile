@@ -19,17 +19,17 @@ namespace Game.Village
         protected int currentUpgradeStage = 1;
         public int CurrentUpgradeStage => currentUpgradeStage;
 
-        /// <summary>
-        /// Performs the building upgrade process.
-        /// Common logic for all buildings can be written here.
-        /// If you want a special behavior, you can override it.
-        /// </summary>
+
         public virtual void Upgrade()
         {
             currentUpgradeStage++;
-            Debug.Log($"{name} {currentUpgradeStage}. upgraded.");
-            // Common upgrade operations (e.g. resource consumption, stat increase, etc.) can be added here.
+            Debug.Log($"{name} {currentUpgradeStage}. upgraded.");        }
+
+        public virtual UpgradeStage GetNextUpgradeStage()
+        {
+            return null;
         }
+
         public virtual string GetUpgradeInfo()
         {
             return string.Empty;

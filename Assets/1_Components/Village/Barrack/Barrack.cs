@@ -46,8 +46,13 @@ namespace Game.Village
                 barrackPanel.SetActive(true);
             }
         }
+        public override void Upgrade()
+        {
+            currentUpgradeStage++;
+            Debug.Log("Barrack upgraded to stage " + currentUpgradeStage);
+        }
 
-        public UpgradeStage GetNextUpgradeStage()
+        public override UpgradeStage GetNextUpgradeStage()
         {
             int nextStageLevel = currentUpgradeStage + 1;
             return upgradeData.upgradeStages.Find(s => s.stageLevel == nextStageLevel);

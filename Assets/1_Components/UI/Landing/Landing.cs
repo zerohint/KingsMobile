@@ -32,8 +32,9 @@ public class Landing : MonoBehaviour
         if (pm.playerData.playerLevel == 0)
         {
             pm.playerData.playerLevel = 1;
-            pm.playerData.gold = 1000;
-            pm.playerData.food = 500;
+            pm.playerData.coin = 1000;
+            pm.playerData.gem = 0;
+            pm.playerData.grain = 500;
         }
 
         pm.playerData.feudetoryId = (feudatorySelection as FeudatorySelection).feudatories[feudatorySelection.Value].Id;
@@ -45,9 +46,11 @@ public class Landing : MonoBehaviour
         PlayerPrefs.SetString("PlayerPublicData", dataJson);
         PlayerPrefs.Save();
 
-        //PlayersManager.Instance.playerData.emblemId = emblemSelection.Value;
-        //PlayerData.SaveLocal(PlayersManager.Instance.playerData);
-
-        ScenesManager.Instance.LoadScene(ScenesManager.Scene.Game);
+        // Firestore kaydý da yapýlýyor.
+        FirebaseManager.Instance.SavePlayerData(pm.playerData, () =>
+        {
+            Debug.Log("Landing: Player data Firestore'a kaydedildi.");
+            ScenesManager.Instance.LoadScene(ScenesManager.Scene.Game);
+        });
     }
 }
