@@ -25,12 +25,12 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
             if (task.Result == DependencyStatus.Available)
             {
                 firestore = FirebaseFirestore.DefaultInstance;
-                Debug.Log("Firebase Firestore başarıyla başlatıldı.");
+                Debug.Log("Firebase Firestore successfully initialized.");
                 OnFirebaseInitialized?.Invoke();
             }
             else
             {
-                Debug.LogError("Firebase bağımlılık hatası: " + task.Result);
+                Debug.LogError("Firebase dependency error: " + task.Result);
             }
         });
     }
@@ -62,12 +62,12 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
             {
                 if (task.IsCompleted)
                 {
-                    Debug.Log("Player data Firestore'a kaydedildi.");
+                    Debug.Log("Player data saved to Firestore.");
                     onComplete?.Invoke();
                 }
                 else
                 {
-                    Debug.LogError("Veri kaydetme hatası: " + task.Exception);
+                    Debug.LogError("Data saving error: " + task.Exception);
                 }
             });
     }
@@ -77,7 +77,7 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
     {
         if (firestore == null)
         {
-            Debug.LogError("Firestore henüz başlatılmadı!");
+            Debug.LogError("Firestore is not launched yet!");
             return;
         }
         if (string.IsNullOrEmpty(playerName))
@@ -118,23 +118,23 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
                         if (snapshot.ContainsField(FKeys.FEUDETORY_ID))
                             ret.feudetoryId = snapshot.GetValue<int>(FKeys.FEUDETORY_ID);
 
-                        Debug.Log("Player data yüklendi.");
+                        Debug.Log("Player data loaded.");
                         onDataLoaded?.Invoke(ret);
                     }
                     else
                     {
-                        Debug.LogWarning("Veritabanında veri bulunamadı, yeni veri oluşturuluyor.");
+                        Debug.LogWarning("No data found in database, creating new data");
                         PlayerData newData = new PlayerData(playerName);
                         SavePlayerData(newData, () =>
                         {
-                            Debug.Log("Yeni player data oluşturuldu ve kaydedildi.");
+                            Debug.Log("New player data has been created and saved.");
                             onDataLoaded?.Invoke(newData);
                         });
                     }
                 }
                 else
                 {
-                    Debug.LogError("Görev hatası: " + task.Exception);
+                    Debug.LogError("Error: " + task.Exception);
                 }
             });
     }

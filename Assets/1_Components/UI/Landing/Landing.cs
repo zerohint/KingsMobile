@@ -49,7 +49,7 @@ public class Landing : MonoBehaviour
         // Firestore kaydý da yapýlýyor.
         FirebaseManager.Instance.SavePlayerData(pm.playerData, () =>
         {
-            Debug.Log("Landing: Player data Firestore'a kaydedildi.");
+            Debug.Log("Landing: Player data saved to Firestore.");
             ScenesManager.Instance.LoadScene(ScenesManager.Scene.Game);
         });
     }

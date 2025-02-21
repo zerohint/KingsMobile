@@ -31,11 +31,9 @@ public class GameManager : MonoBehaviour
 
     private void OnFirebaseReady()
     {
-        // PlayersManager'da daha önce LoadData() çağrıldıysa, playerData dolu olacaktır.
         var pm = PlayersManager.Instance;
         FirebaseManager.Instance.LoadPlayerData(pm.playerData.playerName, (data) =>
         {
-            // Firebase'den gelen veri PlayersManager.playerData'yı güncelliyor.
             pm.playerData = data;
             Debug.Log("GameManager: Player data loaded from Firebase.");
         });
