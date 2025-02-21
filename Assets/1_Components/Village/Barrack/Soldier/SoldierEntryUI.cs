@@ -9,7 +9,7 @@ public class SoldierEntryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI soldierCountText;
     [SerializeField] private Button produceButton;
 
-    private SoldierData soldierData;
+    public SoldierData soldierData;
     private System.Action<SoldierData, SoldierEntryUI> onProduceClicked;
 
     public void Setup(SoldierData data, System.Action<SoldierData, SoldierEntryUI> onProduce)

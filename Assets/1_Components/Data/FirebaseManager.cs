@@ -18,7 +18,7 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
         InitializeFirebase();
     }
 
-    private void InitializeFirebase()
+    public void InitializeFirebase()
     {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
@@ -125,6 +125,69 @@ public class FirebaseManager : SingletonSC<FirebaseManager>
                 else
                 {
                     Debug.LogError("Görev hatası: " + task.Exception);
+                }
+            });
+    }
+
+    public void SaveProductionOrder(ProductionOrder order, Action onComplete = null)
+    {
+        if (firestore == null)
+        {
+            Debug.LogError("Firestore not initialized yet!");
+            return;
+        }
+        firestore.Collection("ProductionOrders")
+            .Document(order.orderId)
+            .SetAsync(order)
+            .ContinueWithOnMainThread(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    Debug.Log("Production order saved: " + order.orderId);
+                    onComplete?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError("Error saving production order: " + task.Exception);
+                }
+            });
+    }
+
+
+    public void RemoveProductionOrder(string orderId)
+    {
+        firestore.Collection("ProductionOrders")
+            .Document(orderId)
+            .DeleteAsync()
+            .ContinueWithOnMainThread(task =>
+            {
+                if (task.IsCompleted)
+                    Debug.Log("Production order removed: " + orderId);
+                else
+                    Debug.LogError("Error removing production order: " + task.Exception);
+            });
+    }
+
+    public void LoadProductionOrders(Action<List<ProductionOrder>> onOrdersLoaded)
+    {
+        firestore.Collection("ProductionOrders")
+            .GetSnapshotAsync()
+            .ContinueWithOnMainThread(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    var snapshot = task.Result;
+                    List<ProductionOrder> orders = new List<ProductionOrder>();
+                    foreach (var doc in snapshot.Documents)
+                    {
+                        ProductionOrder order = doc.ConvertTo<ProductionOrder>();
+                        orders.Add(order);
+                    }
+                    onOrdersLoaded?.Invoke(orders);
+                }
+                else
+                {
+                    Debug.LogError("Error loading production orders: " + task.Exception);
                 }
             });
     }
