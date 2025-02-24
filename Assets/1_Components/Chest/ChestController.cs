@@ -53,7 +53,7 @@ public class ChestController : MonoBehaviour
         if (hasKey || elapsed >= cooldown)
         {
             chestButton.interactable = true;
-            chestButtonText.text = "OPEN";
+            chestButtonText.text = "READY";
         }
         else
         {
