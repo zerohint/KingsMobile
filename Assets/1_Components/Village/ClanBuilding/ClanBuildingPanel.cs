@@ -17,5 +17,9 @@ namespace Game.Village
         {
             Initialize(BuildingType.ClanBuilding);
         }
+        public override void SetBuilding(BuildingBase building)
+        {
+            base.SetBuilding(building);
+        }
     }
 }

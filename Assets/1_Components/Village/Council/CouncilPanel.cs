@@ -5,12 +5,16 @@ namespace Game.Village
 {
     public class CouncilPanel : BuildingPanelBase
     {
-        public Council CurrentBarrack => Building as Council;
+        public Council CurrentCouncil => Building as Council;
 
         private Council currentCouncil;
         private void Awake()
         {
             Initialize(BuildingType.Council);
+        }
+        public override void SetBuilding(BuildingBase building)
+        {
+            base.SetBuilding(building);
         }
     }
 }

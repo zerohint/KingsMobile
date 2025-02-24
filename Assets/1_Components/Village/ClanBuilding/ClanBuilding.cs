@@ -6,26 +6,37 @@ namespace Game.Village
     public class ClanBuilding : BuildingBase
     {
         public override BuildingType BuildingType => BuildingType.ClanBuilding;
-        public Clan ClanData { get; private set; }
 
-        private void Start()
-        {
-            ClanData = new Clan(1, 10);
-        }
-
+        [SerializeField] private BuildingUpgradeData upgradeData;
+        public BuildingUpgradeData UpgradeData => upgradeData;
         public override string GetData()
         {
-            return JsonUtility.ToJson(ClanData);
+            return JsonUtility.ToJson(new Data()
+            {
+                currentUpgradeStage = currentUpgradeStage
+            });
         }
 
         public override void SetData(string dataString)
         {
-            ClanData = JsonUtility.FromJson<Clan>(dataString);
+            Data data = JsonUtility.FromJson<Data>(dataString);
+            currentUpgradeStage = data.currentUpgradeStage;
+        }
+        public override void Upgrade()
+        {
+            currentUpgradeStage++;
+            Debug.Log("Barrack upgraded to stage " + currentUpgradeStage);
         }
 
         public override void OnPress()
         {
             ShowPanel();
+        }
+
+        [Serializable]
+        private struct Data
+        {
+            public int currentUpgradeStage;
         }
     }
 
@@ -41,4 +52,6 @@ namespace Game.Village
             PlayerLimit = playerLimit;
         }
     }
+
+
 }

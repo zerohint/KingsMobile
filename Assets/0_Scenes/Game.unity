@@ -8004,7 +8004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupPrefab: {fileID: 3280195270686343777, guid: 35812be21349e8b4796f06c012ba5a17,
     type: 3}
-  targetTransform: {fileID: 2048076722}
+  targetTransform: {fileID: 1916719933}
 --- !u!114 &863881442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8059,7 +8059,6 @@ MonoBehaviour:
   chestButton: {fileID: 8464315263536720854}
   chestButtonText: {fileID: 1374653622}
   hasKey: 0
-  animationDuration: 2
 --- !u!1 &869699509
 GameObject:
   m_ObjectHideFlags: 0
@@ -17423,10 +17422,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -17455,7 +17454,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &1927353712
 GameObject:
@@ -18666,11 +18665,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 1916719933}
   - {fileID: 3776082413686574070}
   - {fileID: 8686010624180432995}
   - {fileID: 1788996337}
   - {fileID: 3081746051207219865}
-  - {fileID: 1916719933}
   - {fileID: 178834958}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31710,7 +31709,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -19911.45, y: 12033.692}
+  m_AnchoredPosition: {x: -75220.89, y: 42316.023}
   m_SizeDelta: {x: 0, y: 1050.1514}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2619862701007762572

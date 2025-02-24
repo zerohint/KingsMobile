@@ -79,7 +79,10 @@ public class ChestController : MonoBehaviour
         }
 
         int itemLevel = GetRandomItem();
-        Debug.Log("Items that come out of the chest: " + itemLevel + ". level item");
+        PopupManager.Instance.ShowPopup(
+            "Items that come out of the chest:   level " + itemLevel + " item",
+            () => { }
+        );
 
         chestButton.interactable = false;
     }
