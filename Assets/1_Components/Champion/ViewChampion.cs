@@ -20,10 +20,7 @@ public class ViewChampion : MonoBehaviour
 
     void CloseCanvas()
     {
-        if (ChampionViewCanvas != null)
-        {
-            ChampionViewCanvas.enabled = false;
-        }
+        ViewManager.Instance.ChangeView(ViewManager.View.Village);
     }
 
     private void OnDestroy()
