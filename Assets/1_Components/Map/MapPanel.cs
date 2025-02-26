@@ -21,7 +21,7 @@ namespace Map
         public Transform arrowButton;
         private bool isOpen = false;
     
-        [Header("Animasyon Settings")]
+        [Header("Animation Settings")]
         public float moveDuration = 0.5f;
         public float rotateDuration = 0.3f;
         
@@ -34,7 +34,7 @@ namespace Map
         }
         private void Start()
         {
-            isOpen = false;
+            isOpen = true;
             if (closeButton != null)
             {
                 closeButton.onClick.AddListener(ToggleTab);
